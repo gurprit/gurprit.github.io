@@ -1,26 +1,29 @@
 <html>
 	<head>
 		<title>Hello</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
 	<style>
 
 
 		@import url('https://fonts.googleapis.com/css?family=Domine|Montserrat|Open+Sans|Roboto+Slab');
 		.page {
-			text-align: left;
+			width: 100%;
+			max-width: 900px;
+			margin: auto;
 		}
 		.collection {
-			width: 900px;
 			margin: -50px auto;
 		}
 		.item {
 			margin: 0 0 60px 0;
 		}
 		h1 {
-			font-size: 11vw;
+			font-size: 5vw;
 			line-height: 8vw;
 			font-family: 'Domine', serif;
 			text-align: center;
+			padding: 0 0 100px 0;
 
 		}
 		h1 span {
@@ -28,6 +31,7 @@
 			font-size: 2.25vw;
 			line-height: 0;
 			text-transform: uppercase;
+			display: block;
 		}
 		h2 {
 			margin: 0;
@@ -42,19 +46,23 @@
 			font-family: 'Open Sans', sans-serif;
 			font-size: 16px;
 		}
-		bold {
-			display: block;
-			font-size: 5vw;
-		}
 
+		@media screen 
+		and (min-width : 375px) 
+		and (max-width : 812px) {
+			h1 {
+				font-size: 10vw;
+				line-height: 15vw;
+			}
+			h1 span {
+				font-size: 4.5vw;
+			}
+		}
 	</style>
 <body>
 	<div class="page">
 
-		<h1>
-			<bold>gurprit sahota</bold>
-			<span>portfolio of recent works</span>
-		</h1>
+		<h1>gurprit sahota<span>portfolio of recent works</span></h1>
 
 		<div class="collection">
 
