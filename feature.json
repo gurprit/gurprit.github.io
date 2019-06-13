@@ -1,0 +1,31 @@
+[
+  {
+    "title": "Wallis",
+    "category": "Trend",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "href": "http://www.wallis.co.uk",
+    "imageUrl": "http://www.wallis.co.uk/wcsstore/ConsumerDirectStorefrontAssetStore/images/colors/color8/cms/pages/json/json-0000125785/images/slide-1.jpg"
+  },
+  {
+    "title": "Black",
+    "category": "How To",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "href": "http://www.wallis.co.uk/en/wluk/product/clothing-265973/tops-265992/black-embellished-peplum-top-6049114?bi\u003d0\u0026amp;ps\u003d20",
+    "imageUrl": "http://www.wallis.co.uk/wcsstore/ConsumerDirectStorefrontAssetStore/images/colors/color8/cms/pages/json/json-0000125785/images/slide-2.jpg"
+  },
+  {
+    "title": "Coats",
+    "category": "Blogger",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "href": "http://www.wallis.co.uk/en/wluk/product/clothing-265973/coats-265995/black-parka-jacket-5823123",
+    "imageUrl": "http://www.wallis.co.uk/wcsstore/ConsumerDirectStorefrontAssetStore/images/colors/color8/cms/pages/json/json-0000125785/images/slide-3.jpg"
+  },
+  {
+    "title": "Wallis Life",
+    "category": "Trend",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "href": "http://www.wallis.co.uk/en/wluk/category/wallis-life-4359115/home",
+    "imageUrl": "http://www.wallis.co.uk/wcsstore/ConsumerDirectStorefrontAssetStore/images/colors/color8/cms/pages/json/json-0000125785/images/slide-4.jpg"
+  }
+]
+
