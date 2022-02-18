@@ -53,39 +53,7 @@
 // Our scenes
 var gameScene = new Phaser.Scene("game");
 var titleScene = new Phaser.Scene("title");
-
-var config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 600 },
-            debug: false
-        }
-    }
-};
-
-var player;
-var stars;
-var powerups;
-var bombs;
-var platforms;
-var cursors;
-var score = 0;
-var gameOver = false;
-var scoreText;
-
-var game = new Phaser.Game(config);
-
-// Add both scenes (it does not start them)
-game.scene.add('titleScene', titleScene);
-game.scene.add("game", gameScene);
-
-// Start the title scene
-game.scene.start('titleScene');
-
+    
 gameScene.preload = function() {
     this.load.image('sky', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
@@ -261,6 +229,40 @@ titleScene.create = function() {
     var text = this.add.text(100,100, 'Welcome To My Game!');
     console.log('this worked?!');
 };
+
+
+var config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 600 },
+            debug: false
+        }
+    }
+};
+
+var player;
+var stars;
+var powerups;
+var bombs;
+var platforms;
+var cursors;
+var score = 0;
+var gameOver = false;
+var scoreText;
+
+var game = new Phaser.Game(config);
+
+// Add both scenes (it does not start them)
+game.scene.add('titleScene', titleScene);
+game.scene.add("game", gameScene);
+
+// Start the title scene
+game.scene.start('titleScene');
+
 
 function collectStar (player, star)
 {
