@@ -50,10 +50,6 @@
     
 <script type="text/javascript">
 
-// Our scenes
-var gameScene = new Phaser.Scene("game");
-var titleScene = new Phaser.Scene("title");
-
 var config = {
     type: Phaser.AUTO,
     width: 800,
@@ -64,14 +60,12 @@ var config = {
             gravity: { y: 600 },
             debug: false
         }
-    }
-    /**
+    },
     scene: {
         preload: preload,
         create: create,
         update: update
     }
-    **/
 };
 
 var player;
@@ -86,14 +80,8 @@ var scoreText;
 
 var game = new Phaser.Game(config);
 
-// Add both scenes (it does not start them)
-game.scene.add('titleScene', titleScene);
-game.scene.add("game", gameScene);
-
-// Start the title scene
-game.scene.start('titleScene');
-
-gameScene.preload = function() {
+function preload ()
+{
     this.load.image('sky', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
 
@@ -112,7 +100,8 @@ gameScene.preload = function() {
      
 }
 
-gameScene.create = function() {
+function create ()
+{
     //  A simple background for our game
     this.add.image(400, 300, 'sky');
 
@@ -220,7 +209,8 @@ gameScene.create = function() {
     this.physics.add.collider(player, bombs, hitBomb, null, this);
 }
 
-gameScene.update = function() {
+function update ()
+{
     if (gameOver)
     {
         return;
@@ -256,17 +246,6 @@ gameScene.update = function() {
 
 
 }
-
-titleScene.preload = function() {
-    this.load.image('background', 'assets/sky.png');
-};
-
-titleScene.create = function() {
-    var bg = this.add.sprite(0,0,'background');
-    bg.setOrigin(0,0);
-
-    var text = this.add.text(100,100, 'Welcome To My Game!');
-};
 
 function collectStar (player, star)
 {
