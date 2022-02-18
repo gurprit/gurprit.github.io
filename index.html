@@ -35,226 +35,52 @@
 </head>
 <body>
 
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId            : '422745709498964',
-      autoLogAppEvents : true,
-      xfbml            : true,
-      version          : 'v12.0'
-    }); 
-  };
-</script>
 
-    
 <script type="text/javascript">
 
 // Our scenes
 var gameScene = new Phaser.Scene("game");
 var titleScene = new Phaser.Scene("title");
-    
+
+gameScene.init = function() {
+
+};
+
 gameScene.preload = function() {
-    this.load.image('sky', 'assets/sky.png');
-    this.load.image('ground', 'assets/platform.png');
 
-    //this.load.image('star', 'assets/star.png');
-
-    this.load.spritesheet('coin', 'assets/coin-spin-ss.png', { frameWidth: 32, frameHeight: 32 });
-
-    this.load.image('powerup', 'assets/powerup.png');
-    this.load.image('bomb', 'assets/bomb.png');
-    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-    this.load.spritesheet('pinkmonster', 'assets/Pink_Monster.png', { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet('pinkmonsterRunRight', 'assets/Pink_Monster_Run_6.png', { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet('pinkmonsterRunLeft', 'assets/Pink_Monster_Run_Right_6.png', { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet('pinkmonsterJump', 'assets/Pink_Monster_Jump_8.png', { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet('pinkmonsterDie', 'assets/Pink_Monster_Death_8.png', { frameWidth: 32, frameHeight: 32 });
-     
-}
+};
 
 gameScene.create = function() {
-    //  A simple background for our game
-    this.add.image(400, 300, 'sky');
 
-    //  The platforms group contains the ground and the 2 ledges we can jump on
-    platforms = this.physics.add.staticGroup();
-
-    //  Here we create the ground.
-    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-
-    //  Now let's create some ledges
-    platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
-
-    // The player and its settings
-    //player = this.physics.add.sprite(100, 450, 'dude');
-    player = this.physics.add.sprite(100, 450, 'pinkmonster');
-
-    //  Player physics properties. Give the little guy a slight bounce.
-    player.setBounce(0.2);
-    player.setCollideWorldBounds(true);
-    
-
-    //  Our player animations, turning, walking left and walking right.
-    this.anims.create({
-        key: 'left',
-       frames: this.anims.generateFrameNumbers('pinkmonsterRunLeft', { start: 0, end: 6 }),
-        frameRate: 10,
-        repeat: -1
-    });
-
-    this.anims.create({
-        key: 'turn',
-        frames: [ { key: 'pinkmonster', frame: 4 } ],
-        frameRate: 20
-    });
-
-    this.anims.create({
-        key: 'right',
-        frames: this.anims.generateFrameNumbers('pinkmonsterRunRight', { start: 0, end: 6 }),
-        frameRate: 10,
-        repeat: -1
-    });
-
-    this.anims.create({
-        key: 'jump',
-        frames: this.anims.generateFrameNumbers('pinkmonsterJump', { start: 0, end: 8 }),
-        frameRate: 10,
-        repeat: -1
-    });
-
-    this.anims.create({
-        key: 'die',
-        frames: this.anims.generateFrameNumbers('pinkmonsterDie', { start: 0, end: 8 }),
-        frameRate: 10,
-        repeat: 0
-    });
-
-    this.anims.create({
-        key: 'coin',
-        frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 8 }),
-        frameRate: 10,
-        repeat: -1
-    });
-
-    //  Input Events
-    cursors = this.input.keyboard.createCursorKeys();
-
-    //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
-    stars = this.physics.add.group({
-        key: 'star',
-        repeat: 11,
-        frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 8 }),
-        setXY: { x: 20, y: 0, stepX: 70 },
-
-    });
-
-    stars.playAnimation('coin');
-
-    stars.children.iterate(function (child) {
-
-        //  Give each star a slightly different bounce
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-    });
-
-    bombs = this.physics.add.group();
-
-    powerups = this.physics.add.group();
-
-    //  The score
-    scoreText = this.add.text(16, 16, '0', { fontSize: '32px', fill: '#000' });
-
-    //  Collide the player and the stars with the platforms
-    this.physics.add.collider(player, platforms);
-    this.physics.add.collider(stars, platforms);
-    this.physics.add.collider(bombs, platforms);
-    this.physics.add.collider(powerups, platforms);
-
-    //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-    this.physics.add.overlap(player, stars, collectStar, null, this);
-
-    this.physics.add.overlap(player, powerups, collectPowerup, null, this);
-
-    this.physics.add.collider(player, bombs, hitBomb, null, this);
-}
+};
 
 gameScene.update = function() {
-    if (gameOver)
-    {
-        return;
-    }
 
-    if (cursors.left.isDown)
-    {
-        player.setVelocityX(-160);
-
-        player.anims.play('left', true);
-    }
-    else if (cursors.right.isDown)
-    {
-        player.setVelocityX(160);
-
-        player.anims.play('right', true);
-    }
-    else
-    {
-        player.setVelocityX(0);
-
-        player.anims.play('turn');
-    }
-
-    if (cursors.space.isDown && player.body.touching.down)
-    {
-        player.setVelocityY(-550);
-
-        player.anims.play('jump', true);
-
-        console.log('A jump has happened');
-    }
+};
 
 
-}
+gameScene.end = function() {
+
+};
 
 titleScene.preload = function() {
-    this.load.image('background', 'assets/sky.png');
+
 };
 
 titleScene.create = function() {
-    var bg = this.add.sprite(0,0,'background');
-    bg.setOrigin(0,0);
+
 
     var text = this.add.text(100,100, 'Welcome To My Game!');
-    text.addColor("#ff0000", 0); //red
-    console.log('this worked?!');
 };
 
-
+// We no longer add the scene to the config
 var config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 600 },
-            debug: false
-        }
-    }
+	type: Phaser.AUTO,
+	width: 800,
+	height: 600,
 };
 
-var player;
-var stars;
-var powerups;
-var bombs;
-var platforms;
-var cursors;
-var score = 0;
-var gameOver = false;
-var scoreText;
-
+// Our game Object
 var game = new Phaser.Game(config);
 
 // Add both scenes (it does not start them)
@@ -263,99 +89,6 @@ game.scene.add("game", gameScene);
 
 // Start the title scene
 game.scene.start('titleScene');
-
-
-function collectStar (player, star)
-{
-    star.disableBody(true, true);
-
-    //  Add and update the score
-    score += 10;
-    scoreText.setText('Score: ' + score);
-
-    if (stars.countActive(true) === 0)
-    {
-        //  A new batch of stars to collect
-        stars.children.iterate(function (child) {
-
-            child.enableBody(true, child.x, 0, true, true);
-
-        });
-
-        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-
-        var bomb = bombs.create(x, 16, 'bomb');
-        bomb.setBounce(1);
-        bomb.setCollideWorldBounds(true);
-        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-        bomb.allowGravity = false;
-
-        if (bombs.countActive(true) >= 1) {
-
-            var powerup = powerups.create(x, 16, 'powerup');
-            powerup.setBounce(1);
-            powerup.setCollideWorldBounds(true);
-            powerup.setVelocity(Phaser.Math.Between(-200, 200), 20);
-            powerup.allowGravity = true;
-        }
-
-    }
-}
-
-let isPowerupProtected = false;
-if (isPowerupProtected) {
-    
-}
-
-
-function collectPowerup (player, powerup)
-{
-    player.setTint(0x00bec8);
-    isPowerupProtected = true;
-    powerup.disableBody(true, true);
-
-    setTimeout(() => {
-        player.setTint(0xFFFFFF);
-        isPowerupProtected = false;
-        console.log('PROTECTION LOST');
-    }, 5000);
-
-}
-
-function hitBomb (player, bomb)
-{
-    if (isPowerupProtected) {
-
-        console.log('ULTIMATE PROTECTION!!')
-
-    } else {
-        this.physics.pause();
-
-        player.setTint(0xff0000);
-
-        player.anims.play('die');
-
-        gameOver = true;
-
-        console.log("GAME OVER!!")
-
-        ////facebook share, will sort later
-        /*
-        FB.ui({ method: 'share',
-            href: 'http://gups.world/phaser/',
-            hashtag: '#mostamazinggame',
-            quote: 'I scored ' + score + ' points on this ridiculous game...',
-            display: 'popup'
-        }, function (response)
-        {
-            if (response && response.post_id)
-            {
-                // handle response
-            }
-        });
-        */ 
-    }
-}
 
 </script>
 
