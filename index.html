@@ -92,7 +92,7 @@ function preload ()
     this.load.image('powerup', 'assets/powerup.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-    this.load.spritesheet('pinkmonster', 'assets/mouse02_spritesheets/mouse02_idle_blink_strip8.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('mous', 'assets/mouse02_spritesheets/mouse02_idle_blink_strip8.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('pinkmonsterRunRight', 'assets/mouse02_spritesheets/mouse02_run_strip4.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('pinkmonsterRunLeft', 'assets/Pink_Monster_Run_Right_6.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('pinkmonsterJump', 'assets/Pink_Monster_Jump_8.png', { frameWidth: 32, frameHeight: 32 });
@@ -119,7 +119,7 @@ function create ()
 
     // The player and its settings
     //player = this.physics.add.sprite(100, 450, 'dude');
-    player = this.physics.add.sprite(100, 450, 'pinkmonster');
+    player = this.physics.add.sprite(100, 450, 'mous');
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.setBounce(0.2);
@@ -136,7 +136,7 @@ function create ()
 
     this.anims.create({
         key: 'turn',
-        frames: [ { key: 'pinkmonster', frame: 4 } ],
+        frames: [ { key: 'mous', frame: 4 } ],
         frameRate: 20
     });
 
