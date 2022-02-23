@@ -82,21 +82,20 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-    this.load.image('sky', 'assets/sky.png');
-    this.load.image('ground', 'assets/platform.png');
+    this.load.image('sky', 'https://gurprit.github.io/assets/sky.png');
+    this.load.image('ground', 'https://gurprit.github.io/assets/platform.png');
 
     //this.load.image('star', 'assets/star.png');
 
-    this.load.spritesheet('coin', 'assets/coin-spin-ss.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('coin', 'https://gurprit.github.io/assets/coin-spin-ss.png', { frameWidth: 32, frameHeight: 32 });
 
-    this.load.image('powerup', 'assets/powerup.png');
-    this.load.image('bomb', 'assets/bomb.png');
-    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-    this.load.spritesheet('mous', 'assets/mouse02_spritesheets/mouse02_idle_blink_strip8.png', { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet('pinkmonsterRunRight', 'assets/mouse02_spritesheets/mouse02_run_strip4.png', { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet('pinkmonsterRunLeft', 'assets/Pink_Monster_Run_Right_6.png', { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet('pinkmonsterJump', 'assets/Pink_Monster_Jump_8.png', { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet('pinkmonsterDie', 'assets/Pink_Monster_Death_8.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.image('powerup', 'https://gurprit.github.io/assets/powerup.png');
+    this.load.image('bomb', 'https://gurprit.github.io/assets/bomb.png');
+    this.load.spritesheet('mous', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_idle_blink_strip8.png', { frameWidth: 32, frameHeight: 25 });
+    this.load.spritesheet('mousRunRight', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_run_strip4.png', { frameWidth: 32, frameHeight: 25 });
+    this.load.spritesheet('mousRunLeft', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_run_strip4_left.png', { frameWidth: 32, frameHeight: 25 });
+    this.load.spritesheet('mousJump', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_jump_strip5.png', { frameWidth: 32, frameHeight: 25 });
+    this.load.spritesheet('mousDie', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_die_strip8.png', { frameWidth: 32, frameHeight: 25 });
      
 }
 
@@ -119,7 +118,7 @@ function create ()
 
     // The player and its settings
     //player = this.physics.add.sprite(100, 450, 'dude');
-    player = this.physics.add.sprite(100, 450, 'mous');
+    player = this.physics.add.sprite(100, 450, 'mous').setScale(2.5);
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.setBounce(0.2);
@@ -129,7 +128,7 @@ function create ()
     //  Our player animations, turning, walking left and walking right.
     this.anims.create({
         key: 'left',
-       frames: this.anims.generateFrameNumbers('pinkmonsterRunLeft', { start: 0, end: 6 }),
+       frames: this.anims.generateFrameNumbers('mousRunLeft', { start: 0, end: 6 }),
         frameRate: 10,
         repeat: -1
     });
@@ -142,21 +141,21 @@ function create ()
 
     this.anims.create({
         key: 'right',
-        frames: this.anims.generateFrameNumbers('pinkmonsterRunRight', { start: 0, end: 6 }),
+        frames: this.anims.generateFrameNumbers('mousRunRight', { start: 0, end: 6 }),
         frameRate: 10,
         repeat: -1
     });
 
     this.anims.create({
         key: 'jump',
-        frames: this.anims.generateFrameNumbers('pinkmonsterJump', { start: 0, end: 8 }),
+        frames: this.anims.generateFrameNumbers('mousJump', { start: 0, end: 8 }),
         frameRate: 10,
         repeat: -1
     });
 
     this.anims.create({
         key: 'die',
-        frames: this.anims.generateFrameNumbers('pinkmonsterDie', { start: 0, end: 8 }),
+        frames: this.anims.generateFrameNumbers('mousDie', { start: 0, end: 8 }),
         frameRate: 10,
         repeat: 0
     });
@@ -338,7 +337,6 @@ function hitBomb (player, bomb)
         */ 
     }
 }
-
 </script>
 
 </body>
