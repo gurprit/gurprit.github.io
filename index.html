@@ -147,6 +147,7 @@ function preload () {
 
   this.load.image('LeftButtonImg', 'https://gurprit.github.io/assets/left-button.png');
   this.load.image('RightButtonImg', 'https://gurprit.github.io/assets/right-button.png');
+  this.load.image('UpButtonImg', 'https://gurprit.github.io/assets/up-button.png');  
   
   this.load.image('sky', 'https://gurprit.github.io/assets/sky.png');
   this.load.image('ground', 'https://gurprit.github.io/assets/platform.png');
@@ -160,6 +161,10 @@ function preload () {
   this.load.spritesheet('mousDie', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_die_strip8.png', { frameWidth: 32, frameHeight: 32 });
  
 }
+
+var goRight = false;
+var goLeft = false;
+var goJump = false;
 
 function create () {
   
@@ -269,30 +274,63 @@ function create () {
 
     this.physics.add.collider(player, bombs, hitBomb, null, this);
   
-    leftButton = this.add.image(200, 1150, 'LeftButtonImg', null, this, 0, 1, 0, 1).setScale(3);
+    rightButton = this.add.image(300, 1150, 'RightButtonImg').setScale(3);
   
-    rightButton = this.add.image(500, 1150, 'RightButtonImg', null, this, 0, 1, 0, 1).setScale(3);
+    rightButton.setInteractive();
   
-    rightButton.on("pointerdown", () => {
-      console.log ('right down')
-    });
+    rightButton.on('pointerdown', function(){
+      goRight = true;
+      goLeft = false;
+    }, this);
+  
+    rightButton.on('pointerup', function(){
+      goRight = false;
+      goLeft = false;
+    }, this);
+  
+    leftButton = this.add.image(120, 1150, 'LeftButtonImg').setScale(3);
+  
+    leftButton.setInteractive();
+  
+    leftButton.on('pointerdown', function(){
+      goLeft = true;
+      goRight = false;
+    }, this);
+  
+    leftButton.on('pointerup', function(){
+      goRight = false;
+      goLeft = false;
+    }, this);
+  
+    upButton = this.add.image(600, 1150, 'UpButtonImg').setScale(3);
+  
+    upButton.setInteractive();
+  
+    upButton.on('pointerdown', function(){
+      goJump = true;
+    }, this);
+  
+    upButton.on('pointerup', function(){
+      goJump = false;
+    }, this);
 }
 
 
-function update () {
 
+function update () {
+  
     if (gameOver)
     {
         return;
     }
   
-    if (cursors.left.isDown )
+    if (cursors.left.isDown | goLeft )
     {
         player.setVelocityX(-160);
 
         player.anims.play('left', true);
     }
-    else if (cursors.right.isDown | this.isRunning )
+    else if (cursors.right.isDown | goRight )
     {
         player.setVelocityX(160);
 
@@ -305,7 +343,7 @@ function update () {
         player.anims.play('turn');
     }
 
-    if (cursors.space.isDown && player.body.touching.down)
+    if (( cursors.space.isDown && player.body.touching.down ) | goJump && player.body.touching.down )
     {
         player.setVelocityY(-550);
 
