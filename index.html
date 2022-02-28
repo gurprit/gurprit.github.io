@@ -82,6 +82,7 @@ var score = 0;
 var gameOver = false;
 var scoreText;
 
+
 var game = new Phaser.Game(config);
 
 function preload () {
@@ -142,7 +143,11 @@ function preload () {
     percentText.destroy();
     assetText.destroy();
   });
+  
 
+  this.load.image('LeftButtonImg', 'https://gurprit.github.io/assets/left-button.png');
+  this.load.image('RightButtonImg', 'https://gurprit.github.io/assets/right-button.png');
+  
   this.load.image('sky', 'https://gurprit.github.io/assets/sky.png');
   this.load.image('ground', 'https://gurprit.github.io/assets/platform.png');
   this.load.spritesheet('coin', 'https://gurprit.github.io/assets/coin-spin-ss.png', { frameWidth: 32, frameHeight: 32 });
@@ -156,9 +161,8 @@ function preload () {
  
 }
 
-function create ()
-{
-
+function create () {
+  
     //  A simple background for our game
     this.add.image(400, 400, 'sky').setScale(3);
 
@@ -264,22 +268,31 @@ function create ()
     this.physics.add.overlap(player, powerups, collectPowerup, null, this);
 
     this.physics.add.collider(player, bombs, hitBomb, null, this);
+  
+    leftButton = this.add.image(200, 1150, 'LeftButtonImg', null, this, 0, 1, 0, 1).setScale(3);
+  
+    rightButton = this.add.image(500, 1150, 'RightButtonImg', null, this, 0, 1, 0, 1).setScale(3);
+  
+    rightButton.on("pointerdown", () => {
+      console.log ('right down')
+    });
 }
 
-function update ()
-{
+
+function update () {
+
     if (gameOver)
     {
         return;
     }
-
-    if (cursors.left.isDown)
+  
+    if (cursors.left.isDown )
     {
         player.setVelocityX(-160);
 
         player.anims.play('left', true);
     }
-    else if (cursors.right.isDown)
+    else if (cursors.right.isDown | this.isRunning )
     {
         player.setVelocityX(160);
 
