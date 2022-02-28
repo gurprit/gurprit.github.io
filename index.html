@@ -291,61 +291,30 @@ function create () {
     rightButton.on('pointerdown', function(){
       goRight = true;
       goLeft = false;
-      
-        upButton.on('pointerdown', function(){
-          goJump = true;
-        }, this);
-
-        upButton.on('pointerup', function(){
-          goJump = false;
-        }, this);
-      
     }, this);
   
     rightButton.on('pointerup', function(){
       goRight = false;
       goLeft = false;
-      
-        upButton.on('pointerdown', function(){
-          goJump = false;
-        }, this);
-
-        upButton.on('pointerup', function(){
-          goJump = false;
-        }, this);
-      
     }, this);
   
     leftButton.on('pointerdown', function(){
       goLeft = true;
       goRight = false;
-      
-      
-        upButton.on('pointerdown', function(){
-          goJump = true;
-        }, this);
-
-        upButton.on('pointerup', function(){
-          goJump = false;
-        }, this);
-      
     }, this);
   
     leftButton.on('pointerup', function(){
       goRight = false;
       goLeft = false;
-      
-      
-        upButton.on('pointerdown', function(){
-          goJump = false;
-        }, this);
-
-        upButton.on('pointerup', function(){
-          goJump = false;
-        }, this);
-      
     }, this);
   
+    upButton.on('pointerdown', function(){
+      goJump = true;
+    }, this);
+  
+    upButton.on('pointerup', function(){
+      goJump = false;
+    }, this);
 }
 
 
