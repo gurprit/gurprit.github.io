@@ -274,45 +274,78 @@ function create () {
 
     this.physics.add.collider(player, bombs, hitBomb, null, this);
   
+    /// virtual control buttons 
+  
     rightButton = this.add.image(300, 1150, 'RightButtonImg').setScale(3);
   
     rightButton.setInteractive();
-  
-    rightButton.on('pointerdown', function(){
-      goRight = true;
-      goLeft = false;
-    }, this);
-  
-    rightButton.on('pointerup', function(){
-      goRight = false;
-      goLeft = false;
-    }, this);
   
     leftButton = this.add.image(120, 1150, 'LeftButtonImg').setScale(3);
   
     leftButton.setInteractive();
   
+    upButton = this.add.image(600, 1150, 'UpButtonImg').setScale(3);
+  
+    upButton.setInteractive();
+  
+    rightButton.on('pointerdown', function(){
+      goRight = true;
+      goLeft = false;
+      
+        upButton.on('pointerdown', function(){
+          goJump = true;
+        }, this);
+
+        upButton.on('pointerup', function(){
+          goJump = false;
+        }, this);
+      
+    }, this);
+  
+    rightButton.on('pointerup', function(){
+      goRight = false;
+      goLeft = false;
+      
+        upButton.on('pointerdown', function(){
+          goJump = false;
+        }, this);
+
+        upButton.on('pointerup', function(){
+          goJump = false;
+        }, this);
+      
+    }, this);
+  
     leftButton.on('pointerdown', function(){
       goLeft = true;
       goRight = false;
+      
+      
+        upButton.on('pointerdown', function(){
+          goJump = true;
+        }, this);
+
+        upButton.on('pointerup', function(){
+          goJump = false;
+        }, this);
+      
     }, this);
   
     leftButton.on('pointerup', function(){
       goRight = false;
       goLeft = false;
+      
+      
+        upButton.on('pointerdown', function(){
+          goJump = false;
+        }, this);
+
+        upButton.on('pointerup', function(){
+          goJump = false;
+        }, this);
+      
     }, this);
   
-    upButton = this.add.image(600, 1150, 'UpButtonImg').setScale(3);
-  
-    upButton.setInteractive();
-  
-    upButton.on('pointerdown', function(){
-      goJump = true;
-    }, this);
-  
-    upButton.on('pointerup', function(){
-      goJump = false;
-    }, this);
 }
 
 
