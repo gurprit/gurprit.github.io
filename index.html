@@ -2,7 +2,7 @@
 <html lang="en"> 
 <head> 
     <meta charset="UTF-8" />
-    <title>THE ORBZ OF PROTECTION</title>
+    <title>THE ORBZ OF PROTECTION.</title>
     <meta property="og:title" content="MY AMAZING GAME">
     <meta property="og:image" content="https://placekitten.com/200/200">
     <meta property="og:url" content="http://gups.world/phaser/">
@@ -39,10 +39,22 @@
             max-height: 90%;
           }
         }
+        
+        .keyboard {
+          width: 50%;
+        }
+        @media screen and (max-width: 600px) {
+          .keyboard {
+            display: none;
+          }
+        }
     </style>
 </head>
 <body>
-
+<div class="keyboard">
+    <img src="https://gurprit.github.io/assets/pngkey.com-computer-keyboard-png-2951102.png">
+</div>
+    
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 <script>
   window.fbAsyncInit = function() {
