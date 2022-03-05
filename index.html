@@ -167,7 +167,11 @@ function preload () {
   this.load.image('sky', 'https://gurprit.github.io/assets/sky.png');
   this.load.image('ground', 'https://gurprit.github.io/assets/platform.png');
   this.load.spritesheet('coin', 'https://gurprit.github.io/assets/coin-spin-ss.png', { frameWidth: 32, frameHeight: 32 });
-  this.load.image('powerup', 'https://gurprit.github.io/assets/powerup.png');
+  
+  //this.load.image('powerup', 'https://gurprit.github.io/assets/powerup.png');
+  
+  this.load.spritesheet('powerup', 'https://gurprit.github.io/assets/THEOrbofSheilding-2-M-spriteSheet.png', { frameWidth: 95, frameHeight: 70 });
+  
   this.load.image('bomb', 'https://gurprit.github.io/assets/bomb.png');
   this.load.spritesheet('mous', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_idle_blink_strip8.png', { frameWidth: 32, frameHeight: 32 });
   this.load.spritesheet('mousRunRight', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_run_strip4.png', { frameWidth: 32, frameHeight: 32 });
@@ -248,6 +252,14 @@ function create () {
         frameRate: 10,
         repeat: -1
     });
+  
+    this.anims.create({
+        key: 'powerup',
+        frames: this.anims.generateFrameNumbers('powerup', { start: 0, end: 4 }),
+        frameRate: 11,
+        repeat: -1, 
+      
+    });
 
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();
@@ -271,7 +283,15 @@ function create () {
 
     bombs = this.physics.add.group();
 
-    powerups = this.physics.add.group();
+    //powerups = this.physics.add.group();
+  
+    powerups = this.physics.add.group({
+      key: 'powerup',
+      frames: this.anims.generateFrameNumbers('powerup', { start: 0, end: 8 }),
+      setXY: { x: 200, y: 30, stepX: 60 },
+    });
+  
+      powerups.playAnimation('powerup');
 
     //  The score
     scoreText = this.add.text(16, 16, '0', { fontSize: '32px', fill: '#000' });
