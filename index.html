@@ -166,13 +166,14 @@ function preload () {
   
   this.load.image('sky', 'https://gurprit.github.io/assets/sky.png');
   this.load.image('ground', 'https://gurprit.github.io/assets/platform.png');
-  this.load.spritesheet('coin', 'https://gurprit.github.io/assets/coin-spin-ss.png', { frameWidth: 32, frameHeight: 32 });
+  this.load.spritesheet('coin', 'https://gurprit.github.io/assets/coin-spin-ss.png', { frameWidth: 31, frameHeight: 32 });
   
-  //this.load.image('powerup', 'https://gurprit.github.io/assets/powerup.png');
+  this.load.spritesheet('powerup', 'https://gurprit.github.io/assets/THEOrbofSheilding-2-M-spriteSheet.png', { frameWidth: 95, frameHeight: 75 });
   
-  this.load.spritesheet('powerup', 'https://gurprit.github.io/assets/THEOrbofSheilding-2-M-spriteSheet.png', { frameWidth: 95, frameHeight: 70 });
+  //this.load.image('bomb', 'https://gurprit.github.io/assets/bomb.png');
   
-  this.load.image('bomb', 'https://gurprit.github.io/assets/bomb.png');
+  this.load.spritesheet('bomb', 'https://gurprit.github.io/assets/THEOrbofSheilding--spriteSheet.png', { frameWidth: 45, frameHeight: 40 });
+  
   this.load.spritesheet('mous', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_idle_blink_strip8.png', { frameWidth: 32, frameHeight: 32 });
   this.load.spritesheet('mousRunRight', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_run_strip4.png', { frameWidth: 32, frameHeight: 32 });
   this.load.spritesheet('mousRunLeft', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_run_strip4_left.png', { frameWidth: 32, frameHeight: 32 });
@@ -256,11 +257,18 @@ function create () {
     this.anims.create({
         key: 'powerup',
         frames: this.anims.generateFrameNumbers('powerup', { start: 0, end: 4 }),
-        frameRate: 11,
+        frameRate: 8,
         repeat: -1, 
-      
     });
-
+  
+    this.anims.create({
+        key: 'bomb',
+        frames: this.anims.generateFrameNumbers('bomb', { start: 0, end: 4 }),
+        frameRate: 8,
+        repeat: -1, 
+    });
+  
+ 
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();
 
@@ -281,9 +289,13 @@ function create () {
     child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
     });
 
-    bombs = this.physics.add.group();
-
-    //powerups = this.physics.add.group();
+    bombs = this.physics.add.group({
+      key: 'bomb',
+      frames: this.anims.generateFrameNumbers('bomb', { start: 0, end: 8 }),
+      setXY: { x: 200, y: 30, stepX: 60 },
+    });
+  
+    bombs.playAnimation('bomb');
   
     powerups = this.physics.add.group({
       key: 'powerup',
@@ -291,7 +303,7 @@ function create () {
       setXY: { x: 200, y: 30, stepX: 60 },
     });
   
-      powerups.playAnimation('powerup');
+    powerups.playAnimation('powerup');
 
     //  The score
     scoreText = this.add.text(16, 16, '0', { fontSize: '32px', fill: '#000' });
@@ -414,18 +426,21 @@ function collectStar (player, star)
         var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
         var bomb = bombs.create(x, 16, 'bomb');
-        bomb.setBounce(1);
-        bomb.setCollideWorldBounds(true);
-        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-        bomb.allowGravity = false;
+            bomb.setBounce(1);
+            bomb.setCollideWorldBounds(true);
+            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+            bomb.allowGravity = false;
+            bombs.playAnimation('bomb');
 
         if (bombs.countActive(true) >= 1) {
 
             var powerup = powerups.create(x, 16, 'powerup');
-            powerup.setBounce(1);
-            powerup.setCollideWorldBounds(true);
-            powerup.setVelocity(Phaser.Math.Between(-200, 200), 20);
-            powerup.allowGravity = true;
+                powerup.setBounce(1);
+                powerup.setCollideWorldBounds(true);
+                powerup.setVelocity(Phaser.Math.Between(-200, 200), 20);
+                powerup.allowGravity = true;
+          
+                powerups.playAnimation('powerup');
         }
 
     }
