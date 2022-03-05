@@ -100,7 +100,9 @@ var scoreText;
 
 var game = new Phaser.Game(config);
 
+
 function preload () {
+  
   var progressBar = this.add.graphics();
   var progressBox = this.add.graphics();
   progressBox.fillStyle(0x222222, 0.8);
@@ -306,7 +308,7 @@ function create () {
     powerups.playAnimation('powerup');
 
     //  The score
-    scoreText = this.add.text(16, 16, '0', { fontSize: '320px', fill: '#000' });
+    scoreText = this.add.text(16, 16, '0', { fontSize: '250px', fill: '#000', fontFamily: 'Archivo Black'});
 
     //  Collide the player and the stars with the platforms
     this.physics.add.collider(player, platforms);
