@@ -6,21 +6,11 @@
 <head>
 
   <meta charset="UTF-8">
-  
-<link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
-<meta name="apple-mobile-web-app-title" content="CodePen">
-
-<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
-
-<link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
-
-
-  <title>CodePen - THE ORBZ OF PROTECTION</title>
+ 
+  <title>THE ORBZ OF PROTECTION</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
-  
-  
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
 body {
@@ -34,7 +24,7 @@ body {
 @media screen and (max-width: 600px) {
   body {
     align-items: baseline;
-    background: #22572F;
+    background: #00BEC8;
   }
 }
 
@@ -57,6 +47,9 @@ canvas {
 .keyboard p {
   font-family: "Shadows Into Light", cursive;
   font-size: 14px;
+}
+.keyboard img {
+  width: 90%;
 }
 @media screen and (max-width: 600px) {
   .keyboard {
@@ -182,14 +175,14 @@ function preload () {
   
   this.load.spritesheet('powerup', 'https://gurprit.github.io/assets/THEOrbofSheilding-2-M-spriteSheet.png', { frameWidth: 95, frameHeight: 75 });
   
-  //this.load.image('bomb', 'https://gurprit.github.io/assets/bomb.png');
-  
+
   this.load.spritesheet('bomb', 'https://gurprit.github.io/assets/deathOrb--spriteSheet.png', { frameWidth: 95, frameHeight: 80 });
-  
+
   this.load.spritesheet('mous', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_idle_blink_strip8.png', { frameWidth: 32, frameHeight: 32 });
   this.load.spritesheet('mousRunRight', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_run_strip4.png', { frameWidth: 32, frameHeight: 32 });
   this.load.spritesheet('mousRunLeft', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_run_strip4_left.png', { frameWidth: 32, frameHeight: 32 });
   this.load.spritesheet('mousJump', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_jump_strip5.png', { frameWidth: 32, frameHeight: 32 });
+  
   this.load.spritesheet('mousDie', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_die_strip8.png', { frameWidth: 32, frameHeight: 32 });
  
 }
@@ -217,7 +210,7 @@ function create () {
 
     // The player and its settings
     //player = this.physics.add.sprite(100, 450, 'dude');
-    player = this.physics.add.sprite(100, 450, 'mous').setScale(2);
+    player = this.physics.add.sprite(100, 450, 'mous').setScale(2.5);
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.setBounce(0.2);
@@ -280,7 +273,7 @@ function create () {
         repeat: -1, 
     });
   
- 
+  
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();
 
@@ -304,7 +297,7 @@ function create () {
     bombs = this.physics.add.group({
       key: 'bomb',
       frames: this.anims.generateFrameNumbers('bomb', { start: 0, end: 8 }),
-      setXY: { x: 200, y: 30, stepX: 60 },
+      setXY: { x: 400, y: 30, stepX: 60 },
     });
   
     bombs.playAnimation('bomb');
@@ -312,7 +305,7 @@ function create () {
     powerups = this.physics.add.group({
       key: 'powerup',
       frames: this.anims.generateFrameNumbers('powerup', { start: 0, end: 8 }),
-      setXY: { x: 200, y: 30, stepX: 60 },
+      setXY: { x: 600, y: 30, stepX: 60 },
     });
   
     powerups.playAnimation('powerup');
@@ -449,7 +442,7 @@ function collectStar (player, star)
             var powerup = powerups.create(x, 16, 'powerup');
                 powerup.setBounce(1);
                 powerup.setCollideWorldBounds(true);
-                powerup.setVelocity(Phaser.Math.Between(-200, 200), 20);
+                powerup.setVelocity(Phaser.Math.Between(200, 200), 20);
                 powerup.allowGravity = true;
           
                 powerups.playAnimation('powerup');
