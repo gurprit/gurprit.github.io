@@ -6,7 +6,7 @@
 <head>
 
   <meta charset="UTF-8">
-
+ 
   <title>THE ORBZ OF PROTECTION</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
@@ -24,7 +24,7 @@ body {
 @media screen and (max-width: 600px) {
   body {
     align-items: baseline;
-    background: #22572F;
+    background: #00BEC8;
   }
 }
 
@@ -49,7 +49,7 @@ canvas {
   font-size: 14px;
 }
 .keyboard img {
-    width: 90%;
+  width: 90%;
 }
 @media screen and (max-width: 600px) {
   .keyboard {
@@ -58,6 +58,10 @@ canvas {
 }
 </style>
 
+  
+  
+  
+  
 
 </head>
 
@@ -171,20 +175,17 @@ function preload () {
   
   this.load.spritesheet('powerup', 'https://gurprit.github.io/assets/THEOrbofSheilding-2-M-spriteSheet.png', { frameWidth: 95, frameHeight: 75 });
   
-  //this.load.image('bomb', 'https://gurprit.github.io/assets/bomb.png');
-  
+
   this.load.spritesheet('bomb', 'https://gurprit.github.io/assets/deathOrb--spriteSheet.png', { frameWidth: 95, frameHeight: 80 });
-  
-  this.load.spritesheet('explosional', 'https://gurprit.github.io/assets/explosionalState.png', { frameWidth: 70, frameHeight: 70 });  
-  
+
   this.load.spritesheet('mous', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_idle_blink_strip8.png', { frameWidth: 32, frameHeight: 32 });
   this.load.spritesheet('mousRunRight', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_run_strip4.png', { frameWidth: 32, frameHeight: 32 });
   this.load.spritesheet('mousRunLeft', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_run_strip4_left.png', { frameWidth: 32, frameHeight: 32 });
   this.load.spritesheet('mousJump', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_jump_strip5.png', { frameWidth: 32, frameHeight: 32 });
-  this.load.spritesheet('mousDie', 'https://gurprit.github.io/assets/explosionalState.png', { frameWidth: 40, frameHeight: 60 });
+  
+  this.load.spritesheet('mousDie', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_die_strip8.png', { frameWidth: 32, frameHeight: 32 });
  
 }
-
 
 var goRight = false;
 var goLeft = false;
@@ -272,12 +273,6 @@ function create () {
         repeat: -1, 
     });
   
-     this.anims.create({
-        key: 'explosional',
-        frames: this.anims.generateFrameNumbers('explosional', { start: 0, end: 7 }),
-        frameRate: 8,
-        repeat: -1, 
-    });
   
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();
@@ -302,7 +297,7 @@ function create () {
     bombs = this.physics.add.group({
       key: 'bomb',
       frames: this.anims.generateFrameNumbers('bomb', { start: 0, end: 8 }),
-      setXY: { x: 200, y: 30, stepX: 60 },
+      setXY: { x: 400, y: 30, stepX: 60 },
     });
   
     bombs.playAnimation('bomb');
@@ -447,7 +442,7 @@ function collectStar (player, star)
             var powerup = powerups.create(x, 16, 'powerup');
                 powerup.setBounce(1);
                 powerup.setCollideWorldBounds(true);
-                powerup.setVelocity(Phaser.Math.Between(-200, 200), 20);
+                powerup.setVelocity(Phaser.Math.Between(200, 200), 20);
                 powerup.allowGravity = true;
           
                 powerups.playAnimation('powerup');
