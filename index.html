@@ -1,17 +1,26 @@
+
+
 <!DOCTYPE html>
 <html lang="en" >
 
 <head>
 
-<meta charset="UTF-8" />
-<title>THE ORBZ OF PROTECTION.</title>
-<meta property="og:title" content="THE ORBZ OF PROTECTION.">
-<meta property="og:image" content="https://placekitten.com/200/200">
-<meta property="og:url" content="http://gups.world/phaser/">
-<meta property="og:type" content="FUN">
-<meta property="og:description" content="The best game you will ever play">
-<meta property="fb:app_id" content="422745709498964">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  
+<link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
+<meta name="apple-mobile-web-app-title" content="CodePen">
+
+<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+<link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111" />
+
+
+  <title>CodePen - THE ORBZ OF PROTECTION</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+  
+  
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
 body {
@@ -54,7 +63,13 @@ canvas {
     display: none;
   }
 }
-    </style>
+</style>
+
+  
+  
+  
+  
+
 </head>
 
 <body translate="no" >
@@ -161,7 +176,7 @@ function preload () {
   this.load.image('RightButtonImg', 'https://gurprit.github.io/assets/right-button.png');
   this.load.image('UpButtonImg', 'https://gurprit.github.io/assets/up-button.png');  
   
-  this.load.image('sky', 'https://gurprit.github.io/assets/sky.png');
+  this.load.image('sky', 'https://gurprit.github.io/assets/sky-grey.png');
   this.load.image('ground', 'https://gurprit.github.io/assets/platform.png');
   this.load.spritesheet('coin', 'https://gurprit.github.io/assets/coin-spin-ss.png', { frameWidth: 31, frameHeight: 32 });
   
@@ -303,7 +318,7 @@ function create () {
     powerups.playAnimation('powerup');
 
     //  The score
-    scoreText = this.add.text(16, 16, '0', { fontSize: '250px', fill: '#000', fontFamily: 'Archivo Black'});
+    scoreText = this.add.text(16, 16, '0', { fontSize: '250px', fill: '#CCC', fontFamily: 'Archivo Black'});
 
     //  Collide the player and the stars with the platforms
     this.physics.add.collider(player, platforms);
