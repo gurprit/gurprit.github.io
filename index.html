@@ -6,11 +6,12 @@
 <head>
 
   <meta charset="UTF-8">
-  
+
   <title>THE ORBZ OF PROTECTION</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
     body {
@@ -62,11 +63,11 @@
 
 <body>
   <div class="keyboard">
-  <img src="https://gurprit.github.io/assets/pngkey.com-computer-keyboard-png-2951102.png">
-</div>
+    <img src="https://gurprit.github.io/assets/pngkey.com-computer-keyboard-png-2951102.png">
+  </div>
   
-<script src='https://cdnjs.cloudflare.com/ajax/libs/phaser/3.11.0/phaser.min.js'></script>
-<script id="rendered-js" >
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/phaser/3.11.0/phaser.min.js'></script>
+<script>
 var config = {
     type: Phaser.AUTO,
     width: 720,
@@ -313,7 +314,7 @@ function update () {
   
     if (gameOver)
     {
-        return;
+        return{}
     }
   
     if (cursors.left.isDown | goLeft )
@@ -423,8 +424,23 @@ function hitBomb (player, bomb)
         gameOver = true;
 
         console.log("GAME OVER!!")
+
+        var gameOverCopy = [
+            "GAME",
+            "OVER"
+        ];
+
+        this.add.text(100, 300, gameOverCopy, { fontFamily: 'Archivo Black', fontSize: 150, color: '#000', align: 'center' });
+
+        tryAgain = this.add.text(200, 700, 'TRY AGAIN', { fontFamily: 'Archivo Black', fontSize: 50, color: '#000', backgroundColor: '#FFF', padding: 10  });
+
+        tryAgain.setInteractive();
       
-        window.location.reload(false);
+        tryAgain.on('pointerdown', function(){
+          window.location.reload(false);
+        }, this);
+      
+        //
       
 //this.scene.restart();
       
