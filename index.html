@@ -9,65 +9,70 @@
 
   <title>THE ORBZ OF PROTECTION</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+@media screen and (max-width: 600px) {
+  body {
+    align-items: baseline;
+    background: #00BEC8;
+  }
+}
+
+canvas {
+  max-width: 70%;
+  max-height: 70%;
+}
+@media screen and (max-width: 600px) {
+  canvas {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 90%;
+  }
+}
+
+.keyboard {
+  width: 50%;
+}
+.keyboard p {
+  font-family: "Shadows Into Light", cursive;
+  font-size: 14px;
+}
+.keyboard img {
+  width: 100%;
+  max-width: 500px;
+}
+@media screen and (max-width: 600px) {
+  .keyboard {
+    display: none;
+  }
+}
+</style>
+
   
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
-    body {
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      width: 100%;
-    }
-    @media screen and (max-width: 600px) {
-      body {
-        align-items: baseline;
-        background: #00BEC8;
-      }
-    }
-
-    canvas {
-      max-width: 70%;
-      max-height: 70%;
-    }
-    @media screen and (max-width: 600px) {
-      canvas {
-        width: 100%;
-        height: 100%;
-        max-width: 100%;
-        max-height: 90%;
-      }
-    }
-
-    .keyboard {
-      width: 50%;
-    }
-    .keyboard p {
-      font-family: "Shadows Into Light", cursive;
-      font-size: 14px;
-    }
-    .keyboard img {
-      width: 90%;
-    }
-    @media screen and (max-width: 600px) {
-      .keyboard {
-        display: none;
-      }
-    }
-  </style>
+  
+  
+  
 
 </head>
 
-<body>
+<body translate="no" >
   <div class="keyboard">
-    <img src="https://gurprit.github.io/assets/pngkey.com-computer-keyboard-png-2951102.png">
-  </div>
+  <img src="https://gurprit.github.io/assets/pngkey.com-computer-keyboard-png-2951102.png">
+</div>
   
   <script src='https://cdnjs.cloudflare.com/ajax/libs/phaser/3.11.0/phaser.min.js'></script>
-<script>
+      <script id="rendered-js" >
 var config = {
     type: Phaser.AUTO,
     width: 720,
@@ -336,7 +341,7 @@ function update () {
         player.anims.play('turn');
     }
 
-    if (( cursors.space.isDown && player.body.touching.down ) | goJump && player.body.touching.down )
+    if (( cursors.space.isDown && player.body.touching.down | goJump ) )
     {
         player.setVelocityY(-550);
 
@@ -399,6 +404,16 @@ function collectPowerup (player, powerup)
     player.setTint(0x00bec8);
     isPowerupProtected = true;
     powerup.disableBody(true, true);
+  
+    var ultimateProtectionCopy = [
+      "ULTIMATE",
+      "SHIELDING"
+    ];
+  
+  
+
+    this.add.text(200, 300, ultimateProtectionCopy, { fontFamily: 'Archivo Black', fontSize: 50, color: '#000', align: 'center' });
+  
 
     setTimeout(() => {
         player.setTint(0xFFFFFF);
@@ -411,8 +426,12 @@ function collectPowerup (player, powerup)
 function hitBomb (player, bomb)
 {
     if (isPowerupProtected) {
-
         console.log('ULTIMATE PROTECTION!!')
+      
+      bomb.disableBody(true, true);
+        //bomb.setCollideWorldBounds(false);
+        //bomb.setVelocity(Phaser.Math.Between(-400, 200), 20);
+      
 
     } else {
         this.physics.pause();
