@@ -6,11 +6,11 @@
 <head>
 
   <meta charset="UTF-8">
-
+  
   <title>THE ORBZ OF PROTECTION</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
 body {
@@ -410,7 +410,6 @@ function collectPowerup (player, powerup)
       "SHIELDING"
     ];
   
-  
 
     this.add.text(200, 300, ultimateProtectionCopy, { fontFamily: 'Archivo Black', fontSize: 50, color: '#000', align: 'center' });
   
@@ -428,9 +427,9 @@ function hitBomb (player, bomb)
     if (isPowerupProtected) {
         console.log('ULTIMATE PROTECTION!!')
       
-      bomb.disableBody(true, true);
-        //bomb.setCollideWorldBounds(false);
-        //bomb.setVelocity(Phaser.Math.Between(-400, 200), 20);
+      //bomb.disableBody(true, true);
+        bomb.setCollideWorldBounds(false);
+        bomb.setVelocity(Phaser.Math.Between(-4000, 200), 20);
       
 
     } else {
