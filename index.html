@@ -6,15 +6,10 @@
 <head>
 
   <meta charset="UTF-8">
-  
+ 
   <title>THE ORBZ OF PROTECTION</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="preload" as="font" href="https://gurprit.github.io/assets/fonts/yoster-island/yoster.ttf" type="font/ttf" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-
-  
-  
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
 body {
@@ -63,14 +58,9 @@ canvas {
 }
 </style>
 
-  
-  
-  
-  
-
 </head>
 
-<body translate="no" >
+<body>
   <div class="keyboard">
   <img src="https://gurprit.github.io/assets/pngkey.com-computer-keyboard-png-2951102.png">
 </div>
@@ -229,7 +219,6 @@ function create () {
         repeat: 11,
         frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 8 }),
         setXY: { x: 30, y: 30, stepX:  60 },
-
     });
 
     stars.playAnimation('coin');
@@ -364,7 +353,7 @@ function collectStar (player, star)
     //  Add and update the score
     score += 10;
     scoreText.setText(score);
-
+  
     if (stars.countActive(true) === 0)
     {
         //  A new batch of stars to collect
@@ -401,7 +390,7 @@ let isPowerupProtected = false;
 if (isPowerupProtected) {
     
 }
-
+let ultimationProtectionCopyShown = false;
 
 function collectPowerup (player, powerup)
 {
@@ -411,22 +400,23 @@ function collectPowerup (player, powerup)
   
     var ultimateProtectionCopy = [
       "ULTIMATE",
+      "POWER",
       "SHIELDING"
     ];
   
-
       const ultimateProtection = this.add.text(200, 300, ultimateProtectionCopy, { fontFamily: 'Archivo Black', fontSize: 50, color: '#000', align: 'center' });
 
     setTimeout(() => {
         player.setTint(0xFFFFFF);
         isPowerupProtected = false;
         console.log('PROTECTION LOST');
-      ultimateProtection.destroy();
     }, 5000);
 
     setTimeout(() => {
       ultimateProtection.destroy();
     }, 1500);
+  
+  ultimationProtectionCopyShown = true;
 }
 
 function hitBomb (player, bomb)
