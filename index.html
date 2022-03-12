@@ -6,11 +6,10 @@
 <head>
 
   <meta charset="UTF-8">
-  
   <title>THE ORBZ OF PROTECTION</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
 body {
@@ -80,7 +79,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 600 },
+            gravity: { y: 1200 },
             debug: false
         }
     },
@@ -308,7 +307,7 @@ function create () {
       goJump = true;
     }, this);
   
-    upButton.on('pointerup', function(){
+      upButton.on('pointerup', function(){
       goJump = false;
     }, this);
 }
@@ -341,11 +340,11 @@ function update () {
         player.anims.play('turn');
     }
 
-    if (( cursors.space.isDown && player.body.touching.down | goJump ) )
+    if ( (cursors.space.isDown && player.body.touching.down) |  (goJump  && player.body.touching.down) )
     {
-        player.setVelocityY(-550);
+        player.setVelocityY(-1050);
 
-        player.anims.play('jump', true);
+        player.anims.play('jump', true); 
 
         console.log('A jump has happened');
     }
