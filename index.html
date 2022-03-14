@@ -6,57 +6,59 @@
 <head>
 
   <meta charset="UTF-8">
- 
+
   <title>THE ORBZ OF PROTECTION</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
-body {
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
-}
-@media screen and (max-width: 600px) {
-  body {
-    align-items: baseline;
-    background: #00BEC8;
-  }
-}
 
-canvas {
-  max-width: 70%;
-  max-height: 70%;
-}
-@media screen and (max-width: 600px) {
-  canvas {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 90%;
-  }
-}
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100%;
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        align-items: baseline;
+        background: #00BEC8;
+      }
+    }
 
-.keyboard {
-  width: 50%;
-}
-.keyboard p {
-  font-family: "Shadows Into Light", cursive;
-  font-size: 14px;
-}
-.keyboard img {
-  width: 100%;
-  max-width: 500px;
-}
-@media screen and (max-width: 600px) {
-  .keyboard {
-    display: none;
-  }
-}
-</style>
+    canvas {
+      max-width: 70%;
+      max-height: 70%;
+    }
+    @media screen and (max-width: 600px) {
+      canvas {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 90%;
+      }
+    }
+
+    .keyboard {
+      width: 50%;
+    }
+    .keyboard p {
+      font-family: "Shadows Into Light", cursive;
+      font-size: 14px;
+    }
+    .keyboard img {
+      width: 100%;
+      max-width: 500px;
+    }
+    @media screen and (max-width: 600px) {
+      .keyboard {
+        display: none;
+      }
+    }
+  </style>
 
 </head>
 
@@ -65,8 +67,8 @@ canvas {
   <img src="https://gurprit.github.io/assets/pngkey.com-computer-keyboard-png-2951102.png">
 </div>
   
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/phaser/3.11.0/phaser.min.js'></script>
-      <script id="rendered-js" >
+<script src='https://cdnjs.cloudflare.com/ajax/libs/phaser/3.11.0/phaser.min.js'></script>
+<script>
 var config = {
     type: Phaser.AUTO,
     width: 720,
@@ -94,7 +96,7 @@ var cursors;
 var score = 0;
 var gameOver = false;
 var scoreText;
-
+var gruntAmount;
 
 var game = new Phaser.Game(config);
 
@@ -178,7 +180,7 @@ function create () {
         key: 'jump',
         frames: this.anims.generateFrameNumbers('mousJump', { start: 0, end: 8 }),
         frameRate: 10,
-        repeat: -1
+        repeat: 0
     });
 
     this.anims.create({
@@ -233,6 +235,7 @@ function create () {
       key: 'bomb',
       frames: this.anims.generateFrameNumbers('bomb', { start: 0, end: 8 }),
       setXY: { x: 400, y: 30, stepX: 60 },
+      repeat: gruntAmount - 1,
     });
   
     bombs.playAnimation('bomb');
@@ -262,7 +265,6 @@ function create () {
     this.physics.add.collider(player, bombs, hitBomb, null, this);
   
     /// virtual control buttons 
-  
     this.input.addPointer(3);
   
     rightButton = this.add.image(300, 1150, 'RightButtonImg').setScale(3);
@@ -306,14 +308,13 @@ function create () {
     }, this);
 }
 
-
-
 function update () {
   
     if (gameOver)
     {
         return{}
     }
+
   
     if (cursors.left.isDown | goLeft )
     {
@@ -343,8 +344,10 @@ function update () {
         console.log('A jump has happened');
     }
 
-
 }
+
+var coinsRefreshCount = 0;
+var bombAmount;
 
 function collectStar (player, star)
 {
@@ -353,25 +356,37 @@ function collectStar (player, star)
     //  Add and update the score
     score += 10;
     scoreText.setText(score);
+
+
   
-    if (stars.countActive(true) === 0)
-    {
+    if (stars.countActive(true) === 0) {
+      
+      comeBackCoins = () => {
+        coinsRefreshCount++;
+      }
+
+      comeBackCoins()
+      
+        //currentWave += 1; //Increment the wave amount to make more baddies spawn
+        bombAmount = (coinsRefreshCount * 2) - 1
+      
         //  A new batch of stars to collect
         stars.children.iterate(function (child) {
-
             child.enableBody(true, child.x, 0, true, true);
-
         });
-
+      
         var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
-        var bomb = bombs.create(x, 16, 'bomb');
-            bomb.setBounce(1);
-            bomb.setCollideWorldBounds(true);
-            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-            bomb.allowGravity = false;
-            bombs.playAnimation('bomb');
 
+        for (var i = 0; i < bombAmount; i++) { 
+          var bomb = bombs.create(x, 16, 'bomb');
+          bomb.setBounce(1);
+          bomb.setCollideWorldBounds(true);
+          bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+          bomb.allowGravity = false;
+          bombs.playAnimation('bomb'); 
+        }
+   
         if (bombs.countActive(true) >= 1) {
 
             var powerup = powerups.create(x, 16, 'powerup');
@@ -382,6 +397,7 @@ function collectStar (player, star)
           
                 powerups.playAnimation('powerup');
         }
+      
 
     }
 }
@@ -452,11 +468,6 @@ function hitBomb (player, bomb)
           window.location.reload(false);
         }, this);
       
-        //
-      
-//this.scene.restart();
-      
- // restart current scene
 
         ////facebook share, will sort later
         /*
