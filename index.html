@@ -7,483 +7,487 @@
 
   <meta charset="UTF-8">
   
+  <title>- THE ORBZ OF PROTECTION - branching </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>MrMous Vs The World</title>
-  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
-    <style>
-        html, body #renderCanvas {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
-            overflow: hidden;
-        }
-    </style>
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+@media screen and (max-width: 600px) {
+  body {
+    align-items: baseline;
+    background: #00BEC8;
+  }
+}
+
+canvas {
+  max-width: 70%;
+  max-height: 70%;
+}
+@media screen and (max-width: 600px) {
+  canvas {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 90%;
+  }
+}
+
+.keyboard {
+  width: 50%;
+}
+.keyboard p {
+  font-family: "Shadows Into Light", cursive;
+  font-size: 14px;
+}
+.keyboard img {
+  width: 100%;
+  max-width: 500px;
+}
+@media screen and (max-width: 600px) {
+  .keyboard {
+    display: none;
+  }
+}
+</style>
 
 </head>
 
-<body>
-
-<canvas id="renderCanvas" width="1600" height="1200"></canvas>
+<body translate="no" >
+  <div class="keyboard">
+  <img src="https://gurprit.github.io/assets/pngkey.com-computer-keyboard-png-2951102.png">
+</div>
   
-<script src='https://cdnjs.cloudflare.com/ajax/libs/babylonjs/4.2.2/babylon.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js'></script>
-
-<script id="rendered-js" >
-    var canvas, 
-        engine, 
-        scene;
-
-    var isWPressed = false;
-    var isSPressed = false;
-    var isAPressed = false;
-    var isDPressed = false;
-    var isBPressed = false;
-
-    document.addEventListener('DOMContentLoaded', startGame);
-
-    class Dude {
-        constructor(dudeMesh, speed, id, scene, scaling){
-            this.dudeMesh = dudeMesh;
-            this.scene = scene;
-            this.id = id;
-            dudeMesh.Dude = this;
-
-            if (speed) {
-                this.speed= speed;
-            } else {
-                this.speed = 1;
-            }
-
-            if(scaling) {
-                this.scaling = scaling;
-                this.dudeMesh.scaling = new BABYLON.Vector3(this.scaling, this.scaling, this.scaling)
-            } else {
-                this.scaling = 1;
-            }
-
-            if(Dude.boundingBoxParameters == undefined) {
-                Dude.boundingBoxParameters = this.calculateBoundingBoxParameters();
-            }
-
-            this.bounder = this.createBoundingBox();
-            this.bounder.dudeMesh = this.dudeMesh;
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/phaser/3.11.0/phaser.min.js'></script>
+      <script id="rendered-js" >
+var config = {
+    type: Phaser.AUTO,
+    width: 720,
+    height: 1280,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 1200 },
+            debug: false
         }
+    },
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+    }
+};
 
-        move() {
-            if(!this.bounder) {
-                return;
-            }
+var player;
+var stars;
+var powerups;
+var bombs;
+var platforms;
+var cursors;
+var score = 0;
+var gameOver = false;
+var scoreText;
+var gruntAmount;
 
-            this.dudeMesh.position = new BABYLON.Vector3(this.bounder.position.x, this.bounder.position.y - this.scaling * Dude.boundingBoxParameters.lengthY/2, this.bounder.position.z);
-            var tank = scene.getMeshByName("heroTank");
-            var direction = tank.position.subtract(this.dudeMesh.position);
-            var distance = direction.length();
-            var dir = direction.normalize();
-            var alpha = Math.atan2(-1 * dir.x, -1 * dir.z);
-            this.dudeMesh.rotation.y = alpha;
-            if (distance > 30) {
-                this.bounder.moveWithCollisions(dir.multiplyByFloats(this.speed, this.speed, this.speed))
-            }
-        }
+var game = new Phaser.Game(config);
 
-        createBoundingBox() {
-            var lengthX = Dude.boundingBoxParameters.lengthX;
-            var lengthY = Dude.boundingBoxParameters.lengthY;
-            var lengthZ = Dude.boundingBoxParameters.lengthZ;
 
-            var bounder = new BABYLON.Mesh.CreateBox("bounder" + (this.id).toString(), 1, this.scene);
+function preload () {
+  
+  this.load.image('LeftButtonImg', 'https://gurprit.github.io/assets/left-button.png');
+  this.load.image('RightButtonImg', 'https://gurprit.github.io/assets/right-button.png');
+  this.load.image('UpButtonImg', 'https://gurprit.github.io/assets/up-button.png');  
+  
+  this.load.image('sky', 'https://gurprit.github.io/assets/sky-grey.png');
+  this.load.image('ground', 'https://gurprit.github.io/assets/platform.png');
+  this.load.spritesheet('coin', 'https://gurprit.github.io/assets/coin-spin-ss.png', { frameWidth: 31, frameHeight: 32 });
+  
+  this.load.spritesheet('powerup', 'https://gurprit.github.io/assets/THEOrbofSheilding-2-M-spriteSheet.png', { frameWidth: 95, frameHeight: 75 });
+  
 
-            bounder.scaling.x = lengthX * this.scaling;
-            bounder.scaling.y = lengthY * this.scaling;
-            bounder.scaling.z = lengthZ * this.scaling * 2;
+  this.load.spritesheet('bomb', 'https://gurprit.github.io/assets/deathOrb--spriteSheet.png', { frameWidth: 95, frameHeight: 80 });
 
-            bounder.isVisible = false;
+  this.load.spritesheet('mous', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_idle_blink_strip8.png', { frameWidth: 32, frameHeight: 32 });
+  this.load.spritesheet('mousRunRight', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_run_strip4.png', { frameWidth: 32, frameHeight: 32 });
+  this.load.spritesheet('mousRunLeft', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_run_strip4_left.png', { frameWidth: 32, frameHeight: 32 });
+  this.load.spritesheet('mousJump', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_jump_strip5.png', { frameWidth: 32, frameHeight: 32 });
+  
+  this.load.spritesheet('mousDie', 'https://gurprit.github.io/assets/mouse02_spritesheets/mouse02_die_strip8.png', { frameWidth: 32, frameHeight: 32 });
+ 
+}
 
-            var bounderMaterial = new BABYLON.StandardMaterial("bounderMaterial", this.scene);
-            bounderMaterial.alpha = .5;
-            bounder.material = bounderMaterial;
-            bounder.checkCollisions = true;
+var goRight = false;
+var goLeft = false;
+var goJump = false;
 
-            bounder.position = new BABYLON.Vector3(this.dudeMesh.position.x, this.dudeMesh.position.y + this.scaling * lengthY/2, this.dudeMesh.position.z);
+function create () {
+  
+    //  A simple background for our game
+    this.add.image(400, 400, 'sky').setScale(3);
 
-            return bounder;
+    //  The platforms group contains the ground and the 2 ledges we can jump on
+    platforms = this.physics.add.staticGroup();
 
-        }
+    //  Here we create the ground.
+    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
+    platforms.create(400, 1200, 'ground').setScale(10).refreshBody();
 
-        calculateBoundingBoxParameters() {
-            var minX = 999999; var minY = 999999; var minZ = 999999;
-            var maxX = -999999; var maxY = -999999; var maxZ = -999999;
+    //  Now let's create some ledges
+    platforms.create(600, 850, 'ground');
+    platforms.create(150, 650, 'ground');
+    platforms.create(750, 520, 'ground');
 
-            var children = this.dudeMesh.getChildren();
+    // The player and its settings
+    //player = this.physics.add.sprite(100, 450, 'dude');
+    player = this.physics.add.sprite(100, 450, 'mous').setScale(2.5);
 
-            for (var i = 0 ; i < children.length ; i++ ) {
-                var positions = new BABYLON.VertexData.ExtractFromGeometry(children[i]).positions;
-                if(!positions) {
-                    continue;
-                }
+    //  Player physics properties. Give the little guy a slight bounce.
+    player.setBounce(0.2);
+    player.setCollideWorldBounds(true);
+    
 
-                var index = 0;
-                for(var j = index ; j < positions.length ; j +=3) {
-                    if (positions[j] < minX) {
-                        minX = positions[j];
-                    }
-                    if (positions[j] > maxX) {
-                        maxX = positions[j];
-                    }
-                }
+    //  Our player animations, turning, walking left and walking right.
+    this.anims.create({
+        key: 'left',
+       frames: this.anims.generateFrameNumbers('mousRunLeft', { start: 0, end: 6 }),
+        frameRate: 10,
+        repeat: -1
+    });
 
-                index = 1;
-                for(var j = index ; j < positions.length ; j +=3) {
-                    if (positions[j] < minY) {
-                        minY = positions[j];
-                    }
-                    if (positions[j] > maxY) {
-                        maxY = positions[j];
-                    }
-                }
+    this.anims.create({
+        key: 'turn',
+        frames: [ { key: 'mous', frame: 4 } ],
+        frameRate: 20
+    });
 
-                index = 2;
-                for(var j = index ; j < positions.length ; j +=3) {
-                    if (positions[j] < minZ) {
-                        minZ = positions[j];
-                    }
-                    if (positions[j] > maxZ) {
-                        maxZ = positions[j];
-                    }
-                }
+    this.anims.create({
+        key: 'right',
+        frames: this.anims.generateFrameNumbers('mousRunRight', { start: 0, end: 6 }),
+        frameRate: 10,
+        repeat: -1
+    });
 
-                var _lengthX = maxX - minX;
-                var _lengthY = maxY - minY;
-                var _lengthZ = maxZ - minZ;
+    this.anims.create({
+        key: 'jump',
+        frames: this.anims.generateFrameNumbers('mousJump', { start: 0, end: 8 }),
+        frameRate: 10,
+        repeat: 0
+    });
 
-            }
+    this.anims.create({
+        key: 'die',
+        frames: this.anims.generateFrameNumbers('mousDie', { start: 0, end: 8 }),
+        frameRate: 10,
+        repeat: 0
+    });
 
-            return {lengthX : _lengthX, lengthY : _lengthY, lengthZ : _lengthZ};
-        }
+    this.anims.create({
+        key: 'coin',
+        frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 8 }),
+        frameRate: 10,
+        repeat: -1
+    });
+  
+    this.anims.create({
+        key: 'powerup',
+        frames: this.anims.generateFrameNumbers('powerup', { start: 0, end: 4 }),
+        frameRate: 8,
+        repeat: -1, 
+    });
+  
+    this.anims.create({
+        key: 'bomb',
+        frames: this.anims.generateFrameNumbers('bomb', { start: 0, end: 4 }),
+        frameRate: 8,
+        repeat: -1, 
+    });
+  
+  
+    //  Input Events
+    cursors = this.input.keyboard.createCursorKeys();
+
+    //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
+    stars = this.physics.add.group({
+        key: 'star',
+        repeat: 11,
+        frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 8 }),
+        setXY: { x: 30, y: 30, stepX:  60 },
+    });
+
+    stars.playAnimation('coin');
+
+    stars.children.iterate(function (child) {
+
+     //  Give each star a slightly different bounce
+    child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+    });
+
+    bombs = this.physics.add.group({
+      key: 'bomb',
+      frames: this.anims.generateFrameNumbers('bomb', { start: 0, end: 8 }),
+      setXY: { x: 400, y: 30, stepX: 60 },
+      repeat: gruntAmount - 1,
+    });
+  
+    bombs.playAnimation('bomb');
+  
+    powerups = this.physics.add.group({
+      key: 'powerup',
+      frames: this.anims.generateFrameNumbers('powerup', { start: 0, end: 8 }),
+      setXY: { x: 600, y: 30, stepX: 60 },
+    });
+  
+    powerups.playAnimation('powerup');
+
+    //  The score
+    scoreText = this.add.text(16, 16, '0', { fontSize: '250px', fill: '#CCC', fontFamily: 'Archivo Black'});
+
+    //  Collide the player and the stars with the platforms
+    this.physics.add.collider(player, platforms);
+    this.physics.add.collider(stars, platforms);
+    this.physics.add.collider(bombs, platforms);
+    this.physics.add.collider(powerups, platforms);
+
+    //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
+    this.physics.add.overlap(player, stars, collectStar, null, this);
+
+    this.physics.add.overlap(player, powerups, collectPowerup, null, this);
+
+    this.physics.add.collider(player, bombs, hitBomb, null, this);
+  
+    /// virtual control buttons 
+    this.input.addPointer(3);
+  
+    rightButton = this.add.image(300, 1150, 'RightButtonImg').setScale(3);
+  
+    rightButton.setInteractive();
+  
+    leftButton = this.add.image(120, 1150, 'LeftButtonImg').setScale(3);
+  
+    leftButton.setInteractive();
+  
+    upButton = this.add.image(600, 1150, 'UpButtonImg').setScale(3);
+  
+    upButton.setInteractive();
+  
+    rightButton.on('pointerdown', function(){
+      goRight = true;
+      goLeft = false;
+    }, this);
+  
+    rightButton.on('pointerup', function(){
+      goRight = false;
+      goLeft = false;
+    }, this);
+  
+    leftButton.on('pointerdown', function(){
+      goLeft = true;
+      goRight = false;
+    }, this);
+  
+    leftButton.on('pointerup', function(){
+      goRight = false;
+      goLeft = false;
+    }, this);
+  
+    upButton.on('pointerdown', function(){
+      goJump = true;
+    }, this);
+  
+      upButton.on('pointerup', function(){
+      goJump = false;
+    }, this);
+}
+
+function update () {
+  
+    if (gameOver)
+    {
+        return{}
     }
 
-    function startGame() {
-        canvas = document.getElementById("renderCanvas");
-        canvas.style.width = "1800px";
-        canvas.style.height = "1200px";
-        engine = new BABYLON.Engine(canvas, true);
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-        scene = createScene();
-        //this takes over the mouse so you dont have to keep the button clicked 
-        //modifySettings()
-        var tank = scene.getMeshByName("heroTank");
-        engine.runRenderLoop(function () {
-            tank.move();
-            tank.fire();
-            moveHeroDude();
-            moveOtherDudes();
-            scene.render();
+  
+    if (cursors.left.isDown | goLeft )
+    {
+        player.setVelocityX(-160);
+
+        player.anims.play('left', true);
+    }
+    else if (cursors.right.isDown | goRight )
+    {
+        player.setVelocityX(160);
+
+        player.anims.play('right', true);
+    }
+    else
+    {
+        player.setVelocityX(0);
+
+        player.anims.play('turn');
+    }
+
+    if ( (cursors.space.isDown && player.body.touching.down) |  (goJump  && player.body.touching.down) )
+    {
+        player.setVelocityY(-1050);
+
+        player.anims.play('jump', true); 
+
+        console.log('A jump has happened');
+    }
+
+}
+
+var coinsRefreshCount = 0;
+var bombAmount;
+
+function collectStar (player, star)
+{
+    star.disableBody(true, true);
+
+    //  Add and update the score
+    score += 10;
+    scoreText.setText(score);
+
+
+  
+    if (stars.countActive(true) === 0) {
+      
+      comeBackCoins = () => {
+        coinsRefreshCount++;
+      }
+
+      comeBackCoins()
+      
+        //  A new batch of stars to collect
+        stars.children.iterate(function (child) {
+            child.enableBody(true, child.x, 0, true, true);
         });
-    }
+      
+        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
-    var createScene = function () {
-        var scene = new BABYLON.Scene(engine);
-        scene.enablePhysics();
-        scene.clearColor = new BABYLON.Color3(1, 0, 1);
-        //var sphere = BABYLON.Mesh.CreateSphere("mySphere", 32, 2, scene);
-        var ground = createGround(scene);
-        var freeCamera = createFreeCamera(scene);
-        var tank = createTank(scene);
-        var followCamera = createFollowCamera(scene, tank);
-        scene.activeCamera = followCamera;
-        createLights(scene);
-        createHeroDude(scene);
 
-        //var sphere = new BABYLON.Mesh.CreateSphere("s", 10, 1, scene);
-        //sphere.physicsImpostor = new BABYLON.PhysicsImpostor(sphere, BABYLON.PhysicsImpostor.SphereImposter, { mass: 10 }, scene);
-        //sphere.physicsImpostor.applyImpulse(new BABYLON.Vector3(1, 1, 1), new BABYLON.Vector3(1, 1, 1));
-        //return scene;
-
-        var light = new BABYLON.DirectionalLight("directionalLight", new BABYLON.Vector3(-.1, -1, 0), scene)
-        //var light = new BABYLON.PointLight("myPointLight", new BABYLON.Vector3(0, 10, 0), scene)
-        light.intensity = .5;
-        //light.diffuse = new BABYLON.Color3(1, 1, 1)
-        return scene;
-    };
-
-    function createGround(scene) {
-        var ground = new BABYLON.Mesh.CreateGroundFromHeightMap("ground", "iceland_heightmap.png", 2000, 2000, 10, 0, 50, scene, false, OnGroundCreated)
-        function OnGroundCreated() {
-            var groundMaterial  = new BABYLON.StandardMaterial("groundMaterial", scene);
-            groundMaterial.diffuseTexture = new BABYLON.Texture("istockphoto-538181294-612x612.jpeg", scene);
-            ground.material = groundMaterial;
-            ground.checkCollisions = true;
-            ground.physicsImposter = new BABYLON.PhysicsImpostor(ground, 
-                BABYLON.PhysicsImpostor.HeightmapImpostor, { mass:0 }, scene);
+        for (var i = 0; i < coinsRefreshCount; i++) { 
+          var bomb = bombs.create(x, 16, 'bomb');
+          bomb.setBounce(1);
+          bomb.setCollideWorldBounds(true);
+          bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+          bomb.allowGravity = false;
+          bombs.playAnimation('bomb'); 
         }
-        return ground;
+   
+        if (bombs.countActive(true) >= 1) {
+
+            var powerup = powerups.create(x, 16, 'powerup');
+                powerup.setBounce(1);
+                powerup.setCollideWorldBounds(true);
+                powerup.setVelocity(Phaser.Math.Between(200, 200), 20);
+                powerup.allowGravity = true;
+          
+                powerups.playAnimation('powerup');
+        }
+      
+
     }
-    function createLights(scene) {
-        light1 = new BABYLON.DirectionalLight("directionalLight1", new BABYLON.Vector3(-.1, -1, 0), scene)
-        light2 = new BABYLON.DirectionalLight("directionalLight2", new BABYLON.Vector3(-.1, -1, 0), scene)
-        light3 = new BABYLON.DirectionalLight("directionalLight3", new BABYLON.Vector3(-.1, -1, 0), scene)
-    }
-    function createFreeCamera(scene) {
-        var camera = new BABYLON.FreeCamera("freeCamera", new BABYLON.Vector3(0, 0, 0), scene);
-        camera.attachControl(canvas);
-        camera.position.y += 27;
-        camera.checkCollisions = true;
-        camera.applyGravity = true;
+}
 
-        camera.keysUp.push('w'.charCodeAt(0));
-        camera.keysUp.push('W'.charCodeAt(0));
+let isPowerupProtected = false;
+if (isPowerupProtected) {
+    
+}
+let ultimationProtectionCopyShown = false;
 
-        camera.keysDown.push('s'.charCodeAt(0));
-        camera.keysDown.push('S'.charCodeAt(0));
+function collectPowerup (player, powerup)
+{
+    player.setTint(0x00bec8);
+    isPowerupProtected = true;
+    powerup.disableBody(true, true);
+  
+    var ultimateProtectionCopy = [
+      "ULTIMATE",
+      "EXTREME",
+      "SHIELDING"
+    ];
+  
+      const ultimateProtection = this.add.text(200, 300, ultimateProtectionCopy, { fontFamily: 'Archivo Black', fontSize: 50, color: '#000', align: 'center' });
 
-        camera.keysRight.push('d'.charCodeAt(0));
-        camera.keysRight.push('D'.charCodeAt(0));
+    setTimeout(() => {
+        player.setTint(0xFFFFFF);
+        isPowerupProtected = false;
+        console.log('PROTECTION LOST');
+    }, 5000);
 
-        camera.keysLeft.push('a'.charCodeAt(0));
-        camera.keysLeft.push('A'.charCodeAt(0));
+    setTimeout(() => {
+      ultimateProtection.destroy();
+    }, 1500);
+  
+  ultimationProtectionCopyShown = true;
+}
 
-        return camera;
-    }
+function hitBomb (player, bomb)
+{
+    if (isPowerupProtected) {
+        console.log('ULTIMATE PROTECTION!!')
+        bomb.setCollideWorldBounds(false);
+        bomb.setVelocity(Phaser.Math.Between(-4000, 200), 20);
+      
+    } else {
+        this.physics.pause();
 
-    function createHeroDude(scene) {
-        BABYLON.SceneLoader.ImportMesh("him", "/models/", "Dude.babylon", scene, onDudeImported );
-        function onDudeImported (newMeshes, particleSystems, skeletons) {
-            newMeshes[0].position = new BABYLON.Vector3(0, 0, 5);  // The original dude
-            newMeshes[0].name = "heroDude";
-            var heroDude = newMeshes[0]; 
-            scene.beginAnimation(skeletons[0], 0, 120, true, 1.0);
-            var hero = new Dude(heroDude, 2, -1, scene, .1);
+        player.setTint(0xff0000);
 
-            scene.dudes = [];
-            scene.dudes[0] = heroDude;
+        player.anims.play('die');
 
-            for( var q = 1 ; q <= 50 ; q++) {
-                scene.dudes[q] = DoClone(heroDude, skeletons, q);
-                scene.beginAnimation(scene.dudes[q].skeleton, 0, 120, true, 1.0);
-                var temp = new Dude(scene.dudes[q], 2, q, scene, .1);
+        gameOver = true;
+
+        console.log("GAME OVER!!")
+
+        var gameOverCopy = [
+            "GAME",
+            "OVER"
+        ];
+
+        this.add.text(100, 300, gameOverCopy, { fontFamily: 'Archivo Black', fontSize: 150, color: '#000', align: 'center' });
+
+        tryAgain = this.add.text(200, 700, 'TRY AGAIN', { fontFamily: 'Archivo Black', fontSize: 50, color: '#000', backgroundColor: '#FFF', padding: 10  });
+
+        tryAgain.setInteractive();
+      
+        tryAgain.on('pointerdown', function(){
+          window.location.reload(false);
+        }, this);
+      
+        //
+      
+//this.scene.restart();
+      
+ // restart current scene
+
+        ////facebook share, will sort later
+        /*
+        FB.ui({ method: 'share',
+            href: 'http://gups.world/phaser/',
+            hashtag: '#mostamazinggame',
+            quote: 'I scored ' + score + ' points on this ridiculous game...',
+            display: 'popup'
+        }, function (response)
+        {
+            if (response && response.post_id)
+            {
+                // handle response
             }
-        }
+        });
+        */ 
     }
-
-    function DoClone(original, skeletons, id) {
-        var myClone;
-
-        var xrand = Math.floor(Math.random() * 5010) - 2500;
-        var zrand = Math.floor(Math.random() * 5010) - 2500;
-
-        myClone = original.clone("clone_" + id);
-
-        myClone.position = new BABYLON.Vector3(xrand, 0, zrand);
-
-        if(!skeletons) {
-            return myClone;
-        } else {
-            if (!original.getChildren()) {
-                myClone.skeleton = skeletons[0].clone("clone_" + id + "_skeleton");
-                return myClone;
-            } else {
-                // this means one skeleton controlling/animating all the children
-                if(skeletons.length == 1) { 
-
-                    var clonedSkeleton = skeletons[0].clone("clone_" + id + "_skeleton");
-
-                    myClone.skeleton = clonedSkeleton;
-
-                    var numChildren = myClone.getChildren().length;
-                    for(var a = 0; a < numChildren; a++) {
-
-                        myClone.getChildren()[a].skeleton = clonedSkeleton;
-
-                    }
-
-                    return myClone;
-
-                } else if(skeletons.length == original.getChildren().length) {
-                    // most probs each child has its own skel 
-                    for(var i = 0; i < myClone.getChildren().length; i++) {
-                        myClone.getChildren()[i].skeleton = skeletons[i].clone("clone_" + id +"_skeleton_"+i);
-                    }
-                    return myClone;
-                }
-            }
-        }
-
-        return myClone;
-    }
-
-    function moveHeroDude() {
-        var heroDude = scene.getMeshByName("heroDude");
-        if (heroDude) {
-            heroDude.Dude.move();
-        }
-    }
-
-    function moveOtherDudes() {
-        if(scene.dudes) {
-            for(var q = 0 ; q< scene.dudes.length ; q++) {
-                scene.dudes[q].Dude.move();
-            }
-        }
-    }
-
-    window.addEventListener("resize", function () {
-        engine.resize();
-    });
-
-    function createFollowCamera(scene, target) {
-        var camera = new BABYLON.FollowCamera("tankFollowCamera", target.position, scene, target );
-        camera.radius = 20;
-        camera.heightOffset = 4;
-        camera.rotationOffset = 180;
-        camera.cameraAcceleration = 0.5;
-        camera.maxCameraSpeed = 50;
-        return camera
-    } 
-
-    function createTank(scene) {
-        
-        var tank = new BABYLON.MeshBuilder.CreateBox("heroTank", {height: 5, depth: 10, width: 6}, scene)
-        var tankMaterial = new BABYLON.StandardMaterial("tankMaterial", scene);
-        tankMaterial.diffuseColor = new BABYLON.Color3.Red;
-        tankMaterial.emissiveColor = new BABYLON.Color3.Blue;
-        tank.material = tankMaterial;
-        tank.position.y += 20;
-        tank.position.x += 10;
-        tank.checkCollisions = true;
-        tank.applyGravity = true;
-        tank.speed = 1;
-        tank.frontVector = new BABYLON.Vector3(0, 0, 1);
-        tank.move = function() {
-            var yMovement = 0;
-
-            if (tank.position.y > 2) {
-                yMovement = -2;
-            }
-            if (isWPressed) {
-                tank.moveWithCollisions(tank.frontVector.multiplyByFloats(tank.speed, tank.speed, tank.speed));
-            }
-            if (isSPressed) {
-                tank.moveWithCollisions(tank.frontVector.multiplyByFloats(-1*tank.speed, -1*tank.speed, -1*tank.speed));
-            }
-            if (isAPressed) {
-                 tank.rotation.y -= .1;
-                 tank.frontVector = new BABYLON.Vector3(Math.sin(tank.rotation.y), 0, Math.cos(tank.rotation.y));
-            }
-            if (isDPressed) {
-                tank.rotation.y += .1;
-                tank.frontVector = new BABYLON.Vector3(Math.sin(tank.rotation.y), 0, Math.cos(tank.rotation.y));
-            }
-        }
-        tank.canFireCannonBalls = true;
-        tank.fire = function(){
-
-            var tank = this;
-            if(!isBPressed) return;
-            if(!tank.canFireCannonBalls) return;
-            tank.canFire = false;
-
-            setTimeout(function () {
-                tank.canFireCannonBalls = true;
-            }, 500)
-
-            var cannonBall = new BABYLON.Mesh.CreateSphere("cannonBall", 32, 2, scene);
-            cannonBall.material = new BABYLON.StandardMaterial("Fire", scene);
-            cannonBall.material.diffuseTexture = new BABYLON.Texture("/f0836587180073.5db0260d02bd1.gif", scene )
-
-            var pos = tank.position;
-
-            cannonBall.position = new BABYLON.Vector3(pos.x, pos.y + 1, pos.z);
-            cannonBall.position.addInPlace(tank.frontVector.multiplyByFloats(5,5,5));
-
-            cannonBall.physicsImpostor = new BABYLON.PhysicsImpostor(cannonBall, BABYLON.PhysicsImpostor.SphereImpostor, { mass: 1 }, scene);
-
-            var fVector = tank.frontVector;
-            var force = new BABYLON.Vector3(fVector.x * 100, (fVector.y+ .1) * 100, fVector.z * 100);
-            cannonBall.physicsImpostor.applyImpulse(force, cannonBall.getAbsolutePosition());
-
-            cannonBall.actionManager = new BABYLON.ActionManager(scene);
-
-            scene.dudes.forEach(function(dude){
-                cannonBall.actionManager.registerAction(new BABYLON.ExecuteCodeAction(
-                    {
-                        trigger: BABYLON.ActionManager.OnIntersectionEnterTrigger, 
-                        parameter: dude.Dude.bounder
-                    }, 
-                    function () {
-                        console.log('HIT!');
-                        dude.Dude.bounder.dispose();
-                        dude.dispose();
-                    }
-                ));
-            });
-
-
-
-            setTimeout(function() {
-                cannonBall.dispose();
-            }, 3000);
-        }
-
-        return tank;
-    }
-
-    function modifySettings() {
-        scene.onPointerDown = function() {
-            canvas.requestPointerLock();
-        }
-
-        document.addEventListener("pointerlockchange", pointerLockListener);
-
-        function pointerLockListener() {
-            var element = document.pointerLockElement || null;
-            if (element) {
-                scene.alreadyLocked = true
-            } else {
-                scene.alreadyLocked = false
-            }
-        }
-    }
-
-    document.addEventListener("keydown", function(event){
-        if(event.key == 'w' || event.key == 'W' || event.key == 'ArrowUp') {
-            isWPressed = true;
-        }
-        if(event.key == 's' || event.key == 'S' || event.key == 'ArrowDown') {
-            isSPressed = true;
-        }
-        if(event.key == 'a' || event.key == 'A' || event.key == 'ArrowLeft') {
-            isAPressed = true;
-        }
-        if(event.key == 'd' || event.key == 'D' || event.key == 'ArrowRight') {
-            isDPressed = true;
-        }
-        if(event.key == 'b' || event.key == 'B' || event.key == ' ' )  {
-            isBPressed = true;
-        }
-    });
-
-    document.addEventListener("keyup", function(event){
-        if(event.key == 'w' || event.key == 'W' || event.key == 'ArrowUp') {
-            isWPressed = false;
-        }
-        if(event.key == 's' || event.key == 'S' || event.key == 'ArrowDown') {
-            isSPressed = false;
-        }
-        if(event.key == 'a' || event.key == 'A' || event.key == 'ArrowLeft') {
-            isAPressed = false;
-        }
-        if(event.key == 'd' || event.key == 'D' || event.key == 'ArrowRight') {
-            isDPressed = false;
-        }
-        if(event.key == 'b' || event.key == 'B' || event.key == ' ' ) {
-            isBPressed = false;
-        }
-    });
-
+}
     </script>
 
   
