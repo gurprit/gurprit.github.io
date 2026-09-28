@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="DelightKit — polished ecommerce microinteractions for React and vanilla JavaScript."><title>DelightKit — ecommerce microinteractions</title><link rel="stylesheet" href="./site.css"></head>
+<body><main class="site-shell"><div id="ambient" class="dk-ambient" aria-hidden="true"></div>
+<nav><a class="brand" href="#top">DelightKit<span>ecommerce microinteractions</span></a><a class="nav-buy" href="#pricing">Get the kit</a></nav>
+<section class="hero" id="top"><p class="eyebrow">REACT + VANILLA JS · ZERO ANIMATION DEPENDENCIES</p><h1>Make the tiny moments <em>feel big.</em></h1><p class="lede">Drop-in microinteractions for ecommerce sites. Confetti, likes, unlocks and ambient celebrations that already feel polished on desktop and mobile.</p><div class="hero-actions"><button class="dk-celebration-button" data-burst>Add to basket ✦</button><a href="#demos">Play with the demos</a></div><div class="hero-note">Accessible reduced-motion fallback included.</div></section>
+<section class="demo-section" id="demos"><header><p class="eyebrow">LIVE DEMOS</p><h2>Click things. That’s the documentation.</h2></header><div class="demo-grid">
+<article><span class="demo-number">01</span><h3>Cart celebration</h3><p>A fast burst, then a slow float down. Built for add-to-cart, signup and success actions.</p><button class="dk-celebration-button dark" data-burst>Add to basket</button></article>
+<article><span class="demo-number">02</span><h3>Like burst</h3><p>A compact social interaction with bright party-colour confetti and a deliberately gentle fall.</p><div class="like-stage"><button class="dk-like-button" id="like-button" aria-pressed="false"><span class="dk-heart">♡</span><span id="like-count">24</span></button></div></article>
+<article class="wide"><span class="demo-number">03</span><h3>Threshold unlock</h3><p>Reward a meaningful ecommerce moment instead of spraying confetti at every mouse twitch.</p><div class="dk-shipping-demo"><button id="unlock">Simulate £50 free-shipping unlock</button><div class="dk-unlock-toast" id="unlock-toast" role="status"><span>✓</span><div><strong>Free shipping unlocked</strong><small>Your basket just levelled up.</small></div></div></div></article>
+</div></section>
+<section class="code-section"><div><p class="eyebrow">DROP IT IN</p><h2>One component. No animation framework.</h2><p>TypeScript-friendly, CSS-driven and designed to degrade quietly when reduced motion is enabled.</p></div><pre><code>import { CelebrationButton } from './delightkit';
+
+&lt;CelebrationButton amount={20}&gt;
+  Add to basket
+&lt;/CelebrationButton&gt;</code></pre></section>
+<section class="pricing" id="pricing"><div><p class="eyebrow">LAUNCH EDITION</p><h2>Ship the delight, skip the fiddling.</h2><p>React components, vanilla JS examples, editable CSS, commercial-use licence and future v1 updates.</p></div><aside><span>INTRO PRICE</span><strong>£29</strong><small>One-off payment</small><a id="buy-link" href="https://sahotaguru.gumroad.com/l/gewsp">Buy DelightKit →</a><em>Instant download via Gumroad.</em></aside></section>
+<footer><span>DelightKit · working title</span><span>Built for useful moments, not confetti carpet-bombing.</span></footer></main><script src="./site.js"></script></body></html>
