@@ -1,17 +1,450 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="DelightKit — polished ecommerce microinteractions for React and vanilla JavaScript."><title>DelightKit — ecommerce microinteractions</title><link rel="stylesheet" href="./site.css"></head>
-<body><main class="site-shell"><div id="ambient" class="dk-ambient" aria-hidden="true"></div>
-<nav><a class="brand" href="#top">DelightKit<span>ecommerce microinteractions</span></a><div class="nav-actions"><a class="nav-free" href="./free/">Try free</a><a class="nav-buy" href="#pricing">Get the kit</a></div></nav>
-<section class="hero" id="top"><p class="eyebrow">REACT + VANILLA JS · ZERO ANIMATION DEPENDENCIES</p><h1>Make the tiny moments <em>feel big.</em></h1><p class="lede">Drop-in microinteractions for ecommerce sites. Confetti, likes, unlocks and ambient celebrations that already feel polished on desktop and mobile.</p><div class="hero-actions"><button class="dk-celebration-button" data-burst>Add to basket ✦</button><a href="#demos">Play with the demos</a><a href="./free/">Get the free component</a></div><div class="hero-note">Accessible reduced-motion fallback included.</div></section>
-<section class="demo-section" id="demos"><header><p class="eyebrow">LIVE DEMOS</p><h2>Click things. That’s the documentation.</h2></header><div class="demo-grid">
-<article><span class="demo-number">01</span><h3>Cart celebration</h3><p>A fast burst, then a slow float down. Built for add-to-cart, signup and success actions.</p><button class="dk-celebration-button dark" data-burst>Add to basket</button></article>
-<article><span class="demo-number">02</span><h3>Like burst</h3><p>A compact social interaction with bright party-colour confetti and a deliberately gentle fall.</p><div class="like-stage"><button class="dk-like-button" id="like-button" aria-pressed="false"><span class="dk-heart">♡</span><span id="like-count">24</span></button></div></article>
-<article class="wide"><span class="demo-number">03</span><h3>Threshold unlock</h3><p>Reward a meaningful ecommerce moment instead of spraying confetti at every mouse twitch.</p><div class="dk-shipping-demo"><button id="unlock">Simulate £50 free-shipping unlock</button><div class="dk-unlock-toast" id="unlock-toast" role="status"><span>✓</span><div><strong>Free shipping unlocked</strong><small>Your basket just levelled up.</small></div></div></div></article>
-</div></section>
-<section class="code-section"><div><p class="eyebrow">DROP IT IN</p><h2>One component. No animation framework.</h2><p>TypeScript-friendly, CSS-driven and designed to degrade quietly when reduced motion is enabled.</p></div><pre><code>import { CelebrationButton } from './delightkit';
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="DelightKit ecommerce microinteractions: standalone Vanilla JavaScript demos, optional React + TypeScript components, confetti, wishlist bursts and ambient celebrations."
+    />
+    <title>DelightKit — Ecommerce Microinteractions</title>
+    <link rel="stylesheet" href="./site.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#demos">Skip to interactive demos</a>
+    <header class="topbar">
+      <a class="brand" href="#top"
+        >DelightKit<span>Little moments. Lasting impressions.</span></a
+      >
+      <nav aria-label="Main">
+        <a href="#demos">The interactions</a
+        ><a href="#implementations">The code</a
+        ><a class="pill" href="./free/"
+          >Try it free <span aria-hidden="true">↗</span></a
+        >
+      </nav>
+    </header>
+    <main>
+      <section class="hero wrap" id="top">
+        <div>
+          <p class="eyebrow">ECOMMERCE MICROINTERACTIONS</p>
+          <h1>A little delight.<br />A lot more <em>feeling.</em></h1>
+          <p class="lede">
+            Turn “added to basket” into a tiny celebration. Give wishlists a
+            heartbeat. Make the everyday moments of shopping feel considered.
+          </p>
+          <div class="badges">
+            <span>Vanilla JavaScript</span
+            ><span>Optional React + TypeScript</span>
+          </div>
+          <div class="hero-actions">
+            <a class="button" href="#demos"
+              >Play with the interactions <span aria-hidden="true">↓</span></a
+            ><a class="text-link" href="#implementations">See how it works</a>
+          </div>
+          <p class="fine">
+            No animation framework · Reduced-motion support · Editable styles
+          </p>
+        </div>
+        <aside class="hero-note">
+          <span class="spark" aria-hidden="true">✳</span>
+          <p>Good design<br />is in the <em>details.</em></p>
+          <span class="note-caption">CLICK. SMILE. REPEAT.</span>
+        </aside>
+      </section>
+      <section class="shop-section" id="demos">
+        <div class="wrap">
+          <header class="section-head">
+            <div>
+              <p class="eyebrow">01 / THE SHOPPING MOMENT</p>
+              <h2>Go on. Add a little joy.</h2>
+              <p>
+                Real interactions in a little imaginary shop. Try the buttons
+                below.
+              </p>
+            </div>
+            <span class="implementation-label">LIVE DEMO · VANILLA JS</span>
+          </header>
+          <div class="shop-grid">
+            <article class="product">
+              <div class="product-art art-case">
+                <span class="product-tag">THE EVERYDAY EDIT</span
+                ><svg
+                  viewBox="0 0 360 260"
+                  role="img"
+                  aria-label="Illustration of a terracotta phone case"
+                >
+                  <defs>
+                    <linearGradient id="case" x2="1" y2="1">
+                      <stop stop-color="#bc6d4e" />
+                      <stop offset="1" stop-color="#7c392c" />
+                    </linearGradient>
+                  </defs>
+                  <ellipse
+                    cx="183"
+                    cy="223"
+                    rx="87"
+                    ry="15"
+                    fill="#b29477"
+                    opacity=".2"
+                  />
+                  <g transform="rotate(17 180 125)">
+                    <rect
+                      x="119"
+                      y="23"
+                      width="127"
+                      height="220"
+                      rx="26"
+                      fill="#713c30"
+                    />
+                    <rect
+                      x="115"
+                      y="18"
+                      width="127"
+                      height="220"
+                      rx="26"
+                      fill="url(#case)"
+                      stroke="#d69c78"
+                      stroke-width="3"
+                    />
+                    <rect
+                      x="126"
+                      y="29"
+                      width="51"
+                      height="65"
+                      rx="15"
+                      fill="#733e31"
+                    />
+                    <g fill="#222522" stroke="#a77e61" stroke-width="3">
+                      <circle cx="140" cy="45" r="8" />
+                      <circle cx="162" cy="65" r="8" />
+                      <circle cx="140" cy="78" r="8" />
+                    </g>
+                    <circle cx="163" cy="43" r="4" fill="#e2c9a3" />
+                    <path
+                      d="M167 159h24m-12-12v24"
+                      stroke="#ddb398"
+                      stroke-width="2"
+                    />
+                  </g></svg
+                ><button
+                  class="wishlist"
+                  data-wishlist="Everyday case"
+                  aria-label="Save Everyday case to wishlist"
+                  aria-pressed="false"
+                >
+                  <span class="dk-heart" aria-hidden="true">♡</span>
+                </button>
+              </div>
+              <div class="product-info">
+                <div class="product-title">
+                  <h3>The everyday case</h3>
+                  <strong>£39</strong>
+                </div>
+                <p>Terracotta · Soft-touch finish</p>
+                <button
+                  class="button cart-button"
+                  data-cart="Everyday case"
+                  data-price="39"
+                >
+                  <span>Add to basket</span><span aria-hidden="true">+</span>
+                </button>
+                <p class="card-caption">
+                  A burst of confetti for a small, happy decision.
+                </p>
+              </div>
+            </article>
+            <article class="product">
+              <div class="product-art art-tote">
+                <span class="product-tag">ROOM FOR THE GOOD STUFF</span
+                ><svg
+                  viewBox="0 0 360 260"
+                  role="img"
+                  aria-label="Illustration of a natural canvas tote bag"
+                >
+                  <ellipse
+                    cx="182"
+                    cy="230"
+                    rx="94"
+                    ry="13"
+                    fill="#8c9679"
+                    opacity=".18"
+                  />
+                  <g transform="rotate(-8 180 140)">
+                    <path
+                      d="M143 92V66c0-49 76-49 76 0v26"
+                      fill="none"
+                      stroke="#b6ac91"
+                      stroke-width="14"
+                    />
+                    <path
+                      d="M146 92V66c0-44 70-44 70 0v26"
+                      fill="none"
+                      stroke="#eee6cc"
+                      stroke-width="8"
+                    />
+                    <path
+                      d="M100 86h161l13 143H87z"
+                      fill="#e8ddbe"
+                      stroke="#c4b998"
+                      stroke-width="2"
+                    />
+                    <path
+                      d="M110 98h141l10 119H100z"
+                      fill="none"
+                      stroke="#d1c4a3"
+                      stroke-dasharray="3 3"
+                    />
+                    <text
+                      x="181"
+                      y="159"
+                      text-anchor="middle"
+                      fill="#50634a"
+                      font-family="Georgia,serif"
+                      font-size="24"
+                    >
+                      good things
+                    </text>
+                    <text
+                      x="181"
+                      y="183"
+                      text-anchor="middle"
+                      fill="#50634a"
+                      font-family="Georgia,serif"
+                      font-size="19"
+                      font-style="italic"
+                    >
+                      inside.
+                    </text>
+                  </g></svg
+                ><button
+                  class="wishlist"
+                  data-wishlist="Weekend tote"
+                  aria-label="Save Weekend tote to wishlist"
+                  aria-pressed="false"
+                >
+                  <span class="dk-heart" aria-hidden="true">♡</span>
+                </button>
+              </div>
+              <div class="product-info">
+                <div class="product-title">
+                  <h3>The weekend tote</h3>
+                  <strong>£24</strong>
+                </div>
+                <p>Natural canvas · All-day everything</p>
+                <button
+                  class="button cart-button"
+                  data-cart="Weekend tote"
+                  data-price="24"
+                >
+                  <span>Add to basket</span><span aria-hidden="true">+</span>
+                </button>
+                <p class="card-caption">
+                  Tap the heart to save a favourite with a flourish.
+                </p>
+              </div>
+            </article>
+            <aside class="basket">
+              <div class="basket-heading">
+                <h3>Your happy little basket</h3>
+                <span id="basket-count">0 items</span>
+              </div>
+              <p class="basket-description">
+                A celebration that means something: free delivery when your
+                basket reaches £50.
+              </p>
+              <div class="basket-items" id="basket-items">
+                <p class="empty">
+                  Good things are on their way.<br />Add something you love.
+                </p>
+              </div>
+              <div class="subtotal">
+                <span>Subtotal</span><strong id="subtotal">£0</strong>
+              </div>
+              <progress
+                id="shipping-progress"
+                max="50"
+                value="0"
+                aria-label="Progress towards £50 free delivery"
+              ></progress>
+              <p id="shipping-message">You’re £50 away from free delivery.</p>
+              <div class="unlock-toast" id="unlock-toast" hidden>
+                <span aria-hidden="true">✦</span>
+                <div>
+                  <strong>Free delivery unlocked!</strong
+                  ><small>A useful milestone. A well-earned celebration.</small>
+                </div>
+              </div>
+              <button class="reset" id="reset-basket">Reset demo basket</button>
+              <p class="fine">Interactive demo only. No orders or payments.</p>
+            </aside>
+          </div>
+          <p
+            class="demo-status"
+            id="demo-status"
+            role="status"
+            aria-live="polite"
+          >
+            Try adding to your basket or saving a favourite.
+          </p>
+        </div>
+      </section>
+      <section class="wrap ambient-section" id="ambient-demo">
+        <header class="section-head">
+          <div>
+            <p class="eyebrow">02 / SET THE MOOD</p>
+            <h2>A celebration, softly spoken.</h2>
+            <p>
+              Slow-floating paper and hearts give a seasonal campaign a little
+              atmosphere.
+            </p>
+          </div>
+          <span class="implementation-label">LIVE DEMO · VANILLA JS</span>
+        </header>
+        <div class="promo">
+          <div id="ambient" class="dk-ambient" aria-hidden="true"></div>
+          <div class="promo-copy">
+            <p class="eyebrow">THE JUST-BECAUSE EVENT</p>
+            <h3>Something lovely.<br /><em>Just for you.</em></h3>
+            <p>A little thank-you for stopping by.</p>
+            <button
+              class="button"
+              id="offer-button"
+              aria-controls="offer-result"
+            >
+              Reveal your treat <span aria-hidden="true">↗</span>
+            </button>
+            <p id="offer-result" role="status">
+              A demo offer, with a little extra sparkle.
+            </p>
+          </div>
+          <button
+            class="ambient-toggle"
+            id="ambient-toggle"
+            aria-pressed="false"
+          >
+            Pause ambient motion
+          </button>
+        </div>
+      </section>
+      <section class="code-section" id="implementations">
+        <div class="wrap">
+          <header class="section-head">
+            <div>
+              <p class="eyebrow">03 / PICK YOUR IMPLEMENTATION</p>
+              <h2>Your stack. Your kind of delight.</h2>
+              <p>
+                Standalone JavaScript for any site. Optional components for
+                React projects.
+              </p>
+            </div>
+          </header>
+          <div class="code-grid">
+            <article>
+              <span class="implementation-label">VANILLA JAVASCRIPT</span>
+              <h3>No framework required.</h3>
+              <p>
+                The live examples above run on plain JavaScript and CSS. The
+                free burst helper is ready to try right here.
+              </p>
+              <pre><code>import { burst } from './src/delightkit-free.js';
+
+const button = document.querySelector('#buy');
+button.addEventListener('click', () =&gt; {
+  burst(button, { amount: 24 });
+});</code></pre>
+              <a href="./free/"
+                >Open the standalone free demo
+                <span aria-hidden="true">↗</span></a
+              >
+            </article>
+            <article>
+              <span class="implementation-label react-label"
+                >REACT + TYPESCRIPT</span
+              >
+              <h3>A component-sized celebration.</h3>
+              <p>
+                The full kit’s optional React components fit into your existing
+                app. This is an integration example; the demos above use Vanilla
+                JS.
+              </p>
+              <pre><code>import { CelebrationButton } from './delightkit';
 
 &lt;CelebrationButton amount={20}&gt;
   Add to basket
-&lt;/CelebrationButton&gt;</code></pre></section>
-<section class="pricing" id="pricing"><div><p class="eyebrow">LAUNCH EDITION</p><h2>Ship the delight, skip the fiddling.</h2><p>React components, vanilla JS examples, editable CSS, commercial-use licence and future v1 updates.</p></div><aside><span>INTRO PRICE</span><strong>£29</strong><small>One-off payment</small><a id="buy-link" href="https://sahotaguru.gumroad.com/l/gewsp">Buy DelightKit →</a><em>Instant download via Gumroad.</em></aside></section>
-<footer><span>DelightKit · working title</span><span>Built for useful moments, not confetti carpet-bombing.</span></footer></main><script src="./site.js"></script></body></html>
+&lt;/CelebrationButton&gt;</code></pre>
+              <p class="code-footnote">
+                React is required only when using the React components.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+      <section class="wrap included" id="included">
+        <p class="eyebrow">04 / THE FULL KIT</p>
+        <h2>Small details, all together.</h2>
+        <div class="included-grid">
+          <article>
+            <span>01</span>
+            <h3>Celebration bursts</h3>
+            <p>Confetti for basket additions and successful actions.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Wishlist feedback</h3>
+            <p>A little flourish when a shopper saves a favourite.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Milestone unlocks</h3>
+            <p>Celebrate rewards and free-delivery thresholds.</p>
+          </article>
+          <article>
+            <span>04</span>
+            <h3>Ambient confetti</h3>
+            <p>Floating paper and hearts for promotional moments.</p>
+          </article>
+          <article>
+            <span>05</span>
+            <h3>Two ways to build</h3>
+            <p>
+              Vanilla JavaScript examples and optional React + TypeScript
+              components.
+            </p>
+          </article>
+          <article>
+            <span>06</span>
+            <h3>Make it yours</h3>
+            <p>Editable source and CSS, with reduced-motion support.</p>
+          </article>
+        </div>
+      </section>
+      <section class="wrap" id="pricing">
+        <div class="pricing">
+          <div>
+            <p class="eyebrow">TAKE A LITTLE DELIGHT WITH YOU</p>
+            <h2>Make the next click<br /><em>a good one.</em></h2>
+            <p>
+              Explore the free celebration component, then find the full kit on
+              Gumroad.
+            </p>
+          </div>
+          <div class="pricing-actions">
+            <a class="button" href="https://sahotaguru.gumroad.com/l/gewsp"
+              >View DelightKit on Gumroad ↗</a
+            ><a class="text-link" href="./free/">Try the free component first</a
+            ><small
+              >See the listing for current pricing and licence details.</small
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="wrap">
+      <a class="brand" href="#top">DelightKit</a
+      ><span>Thoughtful feedback for everyday ecommerce.</span
+      ><a href="#top">Back to top ↑</a>
+    </footer>
+    <script src="./site.js"></script>
+  </body>
+</html>
