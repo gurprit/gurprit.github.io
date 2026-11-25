@@ -1,12 +1,183 @@
 <!doctype html>
 <html lang="en-GB">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Party Lord | Party Speaker</title>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b0c11">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Party Lord turns your Android phone into a DJ booth and nearby phones into synchronized speakers. Guests join for free with Party Speaker or their web browser on the same Wi-Fi.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Party Lord | Your music. Everyone's speaker.">
+<meta property="og:description" content="One host. Many phones. One synchronized party.">
+<meta property="og:url" content="https://gurprit.github.io/PartySpeaker/">
+<link rel="canonical" href="https://gurprit.github.io/PartySpeaker/">
+<title>Party Lord | Your music. Everyone's speaker.</title>
 <style>
-body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px;box-sizing:border-box;background:#141019;color:#fff;font-family:system-ui,-apple-system,sans-serif}
-main{text-align:center;max-width:640px}h1{font-size:clamp(2.5rem,8vw,4rem);margin-bottom:.25em}
-h1 span{background:linear-gradient(90deg,#ffa62b,#ff2699);background-clip:text;color:transparent}
-p{color:#e1d5df;line-height:1.6}
-a{color:#ffb36b;display:inline-block;border:1px solid #e95281;border-radius:12px;padding:12px 18px;text-decoration:none;margin-top:16px}
-</style></head>
-<body><main><h1>👑 <span>Party Lord</span></h1><p>Your music. Your party. One host, many speakers.</p><p>Party Lord is the Android DJ and hosting app. Party Speaker is the free listening companion, with a browser guest option.</p><a href="privacy/">Read our privacy policy</a></main></body></html>
+:root{--bg:#0b0c11;--surface:#15151d;--edge:#2c2b35;--text:#faf9fb;--muted:#b4afbd;--orange:#ffa72f;--pink:#fa168a;--mint:#76f79b;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);scroll-behavior:smooth}
+*,*:before,*:after{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse 62% 30% at 78% 3%,rgba(238,55,110,.13),transparent 76%),radial-gradient(ellipse 58% 32% at 4% 40%,rgba(255,165,48,.05),transparent 75%),var(--bg);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--orange);outline-offset:4px}
+button{font:inherit}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+header{position:relative;z-index:5;border-bottom:1px solid #ffffff14;background:#101117cf;backdrop-filter:blur(16px)}
+.nav{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:13px;font-size:1.2rem;font-weight:900;letter-spacing:-.05em;white-space:nowrap}
+.brand small{display:block;margin-top:1px;color:#b9adbc;font-weight:650;font-size:.61rem;letter-spacing:.18em;text-transform:uppercase}
+.mark{display:inline-block;width:43px;height:43px;border-radius:12px;overflow:hidden;flex-shrink:0;box-shadow:0 0 0 1px #ffffff14}
+.mark svg{display:block;width:100%;height:100%}
+nav{display:flex;gap:27px;align-items:center}
+nav a{font-size:.86rem;font-weight:650;color:#c7c1ce;transition:color .2s}nav a:hover{color:#fff}
+.nav-pill{border:1px solid #ffad6c6b;border-radius:999px;padding:11px 17px;background:#fe477110;color:#fff;font-size:.79rem;font-weight:800;white-space:nowrap}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(340px,.95fr);gap:58px;align-items:center;min-height:660px;padding-top:82px;padding-bottom:100px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;color:#ffc28a;font-weight:850;font-size:.77rem;letter-spacing:.19em;text-transform:uppercase}
+.eyebrow:before{content:"";width:9px;height:9px;border-radius:50%;background:var(--orange);box-shadow:0 0 17px #ffa72fa4}
+h1{font-size:clamp(3.25rem,6.5vw,6.2rem);line-height:.995;letter-spacing:-.079em;margin:27px 0}
+.gradient{background:linear-gradient(108deg,#ffae37 4%,#ff7653 45%,#ff1c91 97%);color:transparent;background-clip:text}
+.lead{font-size:clamp(1.06rem,1.7vw,1.24rem);line-height:1.75;color:#c8c2cd;max-width:520px;margin:0 0 30px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.btn{display:inline-flex;min-height:52px;align-items:center;justify-content:center;gap:10px;padding:13px 20px;border-radius:12px;font-weight:850;font-size:.9rem}
+.btn-primary{background:linear-gradient(100deg,#ffb041,#fb247e);color:#19080d;box-shadow:0 10px 40px #f92e6c28}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-quiet{border:1px solid #4b4652;background:#1b1a24;color:#f7f3f9}.btn-quiet:hover{border-color:#ff955c}
+.hero-note{margin-top:20px;font-size:.79rem;color:#928b99;line-height:1.6}
+.visual{position:relative;min-height:555px;display:flex;justify-content:center;align-items:center;isolation:isolate}
+.visual:before{content:"";position:absolute;width:480px;height:480px;max-width:100%;border-radius:50%;background:radial-gradient(circle,#fc307129 0%,#ea591a13 43%,transparent 69%);filter:blur(15px);z-index:-1}
+.deck{position:relative;width:min(100%,405px);padding:18px;background:linear-gradient(145deg,#28222a,#12141a 47%,#211922);border-radius:24px;border:1px solid #7c60654a;box-shadow:0 35px 90px #00000085,0 2px 3px #ffffff12 inset;transform:rotate(-3deg)}
+.deck:before{content:"";position:absolute;inset:5px;border:1px solid #ffffff0a;border-radius:20px;pointer-events:none}
+.deck-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.deck-title{font-size:.94rem;font-weight:900;letter-spacing:-.045em}.deck-role{font-family:monospace;color:#e9b36c;font-size:.62rem;letter-spacing:.07em}
+.display{background:#080b0c;border:1px solid #353637;border-radius:8px;padding:18px 15px 13px;box-shadow:inset 0 2px 15px #000}
+.display-top{display:flex;justify-content:space-between;align-items:center;color:#95e3b0;font:700 .65rem monospace;letter-spacing:.11em}
+.levels{height:114px;display:flex;align-items:flex-end;gap:4px;justify-content:center;margin:11px 0 7px}
+.levels i{display:block;width:8px;height:var(--h);max-height:105px;border-radius:3px 3px 0 0;background:repeating-linear-gradient(to top,#77f9a0 0 5px,transparent 5px 9px,#77f9a0 9px 14px,transparent 14px 18px,#e8cb4f 18px 23px,transparent 23px 27px,#ff6d58 27px 32px,transparent 32px 36px);background-size:100% 100%;box-shadow:0 0 11px #73f9a125;opacity:.96}
+.disp-foot{font:600 .61rem monospace;color:#647867;letter-spacing:.1em;display:flex;justify-content:space-between}
+.dj-meta{border:1px solid #544049;background:linear-gradient(130deg,#252027,#16161d);border-radius:10px;padding:16px;margin-top:14px}
+.dj-meta small{font:800 .65rem monospace;color:#ffb36b;letter-spacing:.16em}
+.dj-meta strong{display:block;font-size:1.1rem;margin:6px 0 3px}.dj-meta span{color:#a7a0ad;font-size:.75rem}
+.progress{height:4px;background:#3a3441;border-radius:20px;margin:18px 0 10px;overflow:hidden}.progress b{display:block;height:100%;background:linear-gradient(90deg,#ffad3c,#ff1c91);width:48%;border-radius:20px}
+.playtime{display:flex;justify-content:space-between;color:#928a9b;font-size:.65rem;font-family:monospace}
+.controls{display:flex;justify-content:center;gap:13px;align-items:center;margin-top:16px}.control{background:#282630;border:1px solid #665361;display:grid;place-items:center;width:46px;height:43px;border-radius:10px;color:#fff;font-size:1.15rem}.control.main{height:51px;width:65px;background:linear-gradient(100deg,#ffad39,#ff327d);border:0;color:#1b0e11}
+.dj-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:15px;gap:10px;font:.7rem monospace;color:#d2c7d5}.signal{color:#89f6a7}.party-code{padding:5px 7px;border:1px solid #e7b56167;border-radius:6px;color:#e7b561}
+.float-note{position:absolute;right:-40px;bottom:42px;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:#211c26;border:1px solid #584756;box-shadow:0 15px 40px #000a;transform:rotate(3deg);font-weight:800;font-size:.78rem}
+.float-note span{color:var(--mint);font-size:1rem}
+.section{padding:88px 0}
+.rule{border-top:1px solid #ffffff17}
+.section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:35px}
+.kicker{color:#ffad73;text-transform:uppercase;letter-spacing:.18em;font-weight:850;font-size:.74rem}
+h2{margin:12px 0 0;letter-spacing:-.06em;font-size:clamp(2.25rem,4.3vw,4.2rem);line-height:1.11}
+.subtle{max-width:420px;color:#aaa3b3;line-height:1.65;font-size:.95rem}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.step{background:linear-gradient(170deg,#1d1a24,#13141b);border:1px solid #302d36;border-radius:17px;padding:28px;min-height:260px}
+.step-number{color:#f99770;font:800 .72rem monospace;letter-spacing:.15em}
+.step-symbol{font-size:2rem;margin:28px 0 14px}.step h3{font-size:1.24rem;letter-spacing:-.035em;margin:0 0 10px}.step p{font-size:.91rem;color:#b5afbd;line-height:1.72;margin:0}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:34px}
+.product{position:relative;background:#16161e;border:1px solid #35313b;border-radius:21px;padding:32px;min-height:320px;overflow:hidden}
+.product.dj{background:radial-gradient(ellipse 110% 100% at 100% 0%,#a4215027,transparent 65%),#17161e;border-color:#b55f6e57}
+.product:before{content:"";position:absolute;right:-75px;top:-80px;width:250px;height:250px;border:1px solid #ffffff0b;border-radius:50%;box-shadow:0 0 0 50px #ffffff04,0 0 0 110px #ffffff02}
+.product-label{color:#ffc189;font:800 .69rem monospace;text-transform:uppercase;letter-spacing:.17em}
+.product h3{font-size:2.1rem;letter-spacing:-.06em;margin:22px 0 8px}
+.product p{font-size:.93rem;line-height:1.7;color:#b9b2bf;max-width:375px;margin-bottom:26px}
+.price{font-size:2rem;font-weight:900;letter-spacing:-.05em}.price small{font-size:.73rem;font-weight:650;color:#b8adbd;letter-spacing:0}
+.availability{margin-top:10px;color:#a6a0ae;font-size:.8rem}
+.badges{display:flex;gap:9px;flex-wrap:wrap;margin-top:20px}.chip{font-size:.77rem;font-weight:700;padding:7px 10px;border:1px solid #504553;border-radius:999px;color:#e2d5e3;background:#ffffff05}
+.web-card{display:flex;align-items:center;gap:20px;border:1px solid #3a313c;border-radius:16px;background:#191821;margin-top:18px;padding:22px 26px}
+.web-symbol{font-size:2rem}.web-card strong{font-size:1.1rem}.web-card p{margin:5px 0 0;color:#bcb5c1;font-size:.88rem;line-height:1.6}
+.benefits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:30px}
+.benefits article{border-top:2px solid #5b4158;padding-top:20px}.benefits strong{display:block;margin-bottom:9px;font-size:1.03rem}.benefits p{margin:0;color:#aca5b2;line-height:1.7;font-size:.89rem}
+details{border-bottom:1px solid #37333e;padding:20px 0}summary{list-style:none;cursor:pointer;font-weight:750;letter-spacing:-.015em;padding-right:20px}summary::-webkit-details-marker{display:none}summary:after{content:"+";float:right;color:#ffac77;font-size:1.4rem}details[open] summary:after{content:"−"}details p{margin:13px 20px 0 0;color:#b5acbb;line-height:1.7;font-size:.94rem}
+.cta{text-align:center;padding:68px 26px;border-radius:25px;background:radial-gradient(ellipse at 85% 8%,#f31b7128,transparent 60%),linear-gradient(135deg,#282026,#17151d 65%);border:1px solid #5b3f4c;margin:45px 0 90px}.cta h2{margin-bottom:13px}.cta p{color:#b6afbf;max-width:540px;line-height:1.65;margin:0 auto 25px}
+footer{border-top:1px solid #ffffff16;padding:26px 0 35px}.footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:#aaa2b0;font-size:.84rem}.footer-links{display:flex;gap:23px;flex-wrap:wrap}.footer a:hover{color:#fff}
+@media(max-width:950px){.hero{grid-template-columns:1fr;gap:5px;padding-top:80px;text-align:center}.hero .lead{margin-left:auto;margin-right:auto}.hero-actions{justify-content:center}.hero-note{max-width:550px;margin:20px auto 0}.visual{min-height:510px}.float-note{right:4%}.section-head{display:block}.subtle{max-width:620px}}
+@media(max-width:680px){.wrap{padding:0 20px}.nav{min-height:69px}nav{display:none}.nav-pill{font-size:.7rem;padding:9px 12px}.brand{font-size:1.06rem}.mark{width:37px;height:37px}.hero{padding-top:60px;padding-bottom:55px;min-height:0}h1{font-size:clamp(3.1rem,14vw,4.8rem);margin:20px 0}.hero .lead{font-size:1rem}.visual{min-height:435px}.deck{width:min(100%,355px);transform:none}.float-note{right:0;bottom:4px;transform:rotate(2deg)}.section{padding:60px 0}.steps,.pair,.benefits{grid-template-columns:1fr}.step{min-height:0}.benefits{gap:22px}.web-card{align-items:flex-start}.product{min-height:290px;padding:27px}.cta{margin:30px 0 55px;padding:50px 20px}.footer{flex-direction:column;align-items:flex-start}}
+@media(max-width:390px){.nav-pill{display:none}.levels{gap:2px}.levels i{width:7px}.float-note{display:none}}
+@media(prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a href="./" class="brand" aria-label="Party Lord home">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="logo" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffa620"/><stop offset=".55" stop-color="#ff5c3f"/><stop offset="1" stop-color="#f70690"/></linearGradient></defs><rect width="100" height="100" rx="20" fill="url(#logo)"/><path fill="#fff" d="M27 28 39 38 50 20 61 38 73 28 68 48H32Z"/><circle fill="#fff" cx="27" cy="26" r="4"/><circle fill="#fff" cx="50" cy="18" r="4"/><circle fill="#fff" cx="73" cy="26" r="4"/><rect x="22" y="51" width="56" height="35" rx="7" fill="none" stroke="#fff" stroke-width="5"/><rect x="31" y="57" width="38" height="18" rx="3" fill="#fff"/><circle cx="39" cy="66" r="5" fill="#f51985"/><circle cx="61" cy="66" r="5" fill="#f51985"/><path d="M30 83h40" stroke="#fff" stroke-width="7"/></svg>
+      </span>
+      <span>PARTY LORD<small>Your party. Your rules.</small></span>
+    </a>
+    <nav aria-label="Main menu"><a href="#how-it-works">How it works</a><a href="#apps">The apps</a><a href="#questions">FAQs</a><a href="privacy/">Privacy</a></nav>
+    <span class="nav-pill">Coming to Google Play</span>
+  </div>
+</header>
+<main>
+  <section class="wrap hero">
+    <div class="hero-copy">
+      <div class="eyebrow">The portable party system</div>
+      <h1>One DJ.<br><span class="gradient">Every phone's<br> a speaker.</span></h1>
+      <p class="lead">Turn your Android phone into the party's control room. Invite friends to listen on their own phones, all on the same Wi-Fi, with synchronized playback and a retro DJ console built for the moment.</p>
+      <div class="hero-actions"><a class="btn btn-primary" href="#how-it-works">See how it works <span aria-hidden="true">↗</span></a><a class="btn btn-quiet" href="#apps">Meet the apps</a></div>
+      <p class="hero-note">Party Lord for Android · Party Speaker for Android · Browser guests supported.<br>Google Play launch in preparation. Not yet available to purchase.</p>
+    </div>
+    <div class="visual" aria-label="Illustration of Party Lord's retro music controls">
+      <div class="deck">
+        <div class="deck-head"><div class="deck-title">PARTY LORD <span style="color:#ffbb7d">✦</span></div><div class="deck-role">HOST / DJ</div></div>
+        <div class="display">
+          <div class="display-top"><span>● STEREO OUTPUT</span><span>◉ LIVE</span></div>
+          <div class="levels" aria-hidden="true">
+            <i style="--h:43%"></i><i style="--h:57%"></i><i style="--h:71%"></i><i style="--h:48%"></i><i style="--h:92%"></i><i style="--h:64%"></i><i style="--h:39%"></i><i style="--h:77%"></i><i style="--h:96%"></i><i style="--h:53%"></i><i style="--h:62%"></i><i style="--h:81%"></i><i style="--h:48%"></i><i style="--h:35%"></i><i style="--h:55%"></i><i style="--h:87%"></i><i style="--h:74%"></i><i style="--h:42%"></i><i style="--h:97%"></i><i style="--h:66%"></i><i style="--h:44%"></i><i style="--h:77%"></i><i style="--h:52%"></i><i style="--h:84%"></i><i style="--h:49%"></i><i style="--h:34%"></i><i style="--h:56%"></i><i style="--h:44%"></i>
+          </div><div class="disp-foot"><span>28 BAND · AUDIO REACTIVE</span><span>MASTER</span></div>
+        </div>
+        <div class="dj-meta"><small>NOW PLAYING</small><strong>Your next favourite track</strong><span>From your music library</span><div class="progress"><b></b></div><div class="playtime"><span>01:24</span><span>03:10</span></div><div class="controls" aria-label="Illustrative DJ transport controls"><span class="control">◀◀</span><span class="control main">▶</span><span class="control">▶▶</span></div></div>
+        <div class="dj-bottom"><span class="signal">● 3 SPEAKERS CONNECTED</span><span class="party-code">PARTY · 4862</span></div>
+      </div>
+      <div class="float-note"><span aria-hidden="true">●</span> Friends joined the party</div>
+    </div>
+  </section>
+  <section id="how-it-works" class="rule section">
+    <div class="wrap">
+      <div class="section-head"><div><div class="kicker">Three steps. One party.</div><h2>Easy to start.<br><span class="gradient">Hard to stop dancing.</span></h2></div><p class="subtle">No complicated speaker system. Your music, nearby devices and a local Wi-Fi network are all you need to get started.</p></div>
+      <div class="steps">
+        <article class="step"><div class="step-number">01 / HOST</div><div class="step-symbol" aria-hidden="true">🎛️</div><h3>Take the controls</h3><p>Open Party Lord on an Android phone, start hosting and add music from your device or selected Google Drive files.</p></article>
+        <article class="step"><div class="step-number">02 / INVITE</div><div class="step-symbol" aria-hidden="true">📲</div><h3>Bring the speakers</h3><p>Friends join with the free Party Speaker app and your party code. Or enable Web Guests and invite them with a QR code.</p></article>
+        <article class="step"><div class="step-number">03 / PLAY</div><div class="step-symbol" aria-hidden="true">🎧</div><h3>Hit play, together</h3><p>Control the playlist from Party Lord. Connected devices prepare tracks and follow a shared playback timeline over local Wi-Fi.</p></article>
+      </div>
+    </div>
+  </section>
+  <section id="apps" class="rule section">
+    <div class="wrap">
+      <div class="section-head"><div><div class="kicker">Choose your role</div><h2>Two apps.<br><span class="gradient">One shared beat.</span></h2></div><p class="subtle">Only the host pays for Party Lord. Everyone else can join using the free companion app or a browser.</p></div>
+      <div class="pair">
+        <article class="product dj"><div class="product-label">The host · Android</div><h3>👑 Party Lord</h3><p>The full DJ console: import tracks, organize the playlist, start the party, control playback and invite your crowd.</p><div class="price">£2.99 <small>one-time app price</small></div><div class="availability">Google Play release coming soon</div><div class="badges"><span class="chip">Full DJ controls</span><span class="chip">Local music</span><span class="chip">Web Guest QR</span></div></article>
+        <article class="product"><div class="product-label">The companion · Android</div><h3>🎧 Party Speaker</h3><p>Your listening companion. Enter the party code to join, then see album artwork, track information and an audio-reactive LED visualizer.</p><div class="price">Free <small>for guests</small></div><div class="availability">Google Play release coming soon</div><div class="badges"><span class="chip">Easy joining</span><span class="chip">Retro visualizer</span><span class="chip">Background playback</span></div></article>
+      </div>
+      <div class="web-card"><span class="web-symbol" aria-hidden="true">🌐</span><div><strong>Don't have Party Speaker installed? Join in your browser.</strong><p>The host can enable Web Guests and share a QR code. Browser playback support depends on the device and browser, especially while locked or in the background.</p></div></div>
+    </div>
+  </section>
+  <section class="rule section">
+    <div class="wrap">
+      <div class="kicker">Made for real-life parties</div><h2>Less setup.<br><span class="gradient">More music.</span></h2>
+      <div class="benefits">
+        <article><strong>🔒 Local by design</strong><p>Your party runs over nearby Wi-Fi. No developer-hosted music account or remote streaming subscription is needed.</p></article>
+        <article><strong>📼 Proper retro energy</strong><p>A tactile DJ-inspired interface, bold meters and album art that make the host and speaker screens feel like part of the party.</p></article>
+        <article><strong>⏭️ The host stays in control</strong><p>Responsive track selection, Previous and Next, automatic advancement, speaker readiness and synchronized starts.</p></article>
+      </div>
+    </div>
+  </section>
+  <section id="questions" class="rule section">
+    <div class="wrap" style="max-width:860px">
+      <div class="kicker">Good to know</div><h2>Questions? <span class="gradient">Answered.</span></h2>
+      <div style="margin-top:24px">
+        <details><summary>Do all devices need to use the same Wi-Fi?</summary><p>Yes. Party Lord hosts the party on the local network and participating Android and browser guests need to reach that host. Some guest Wi-Fi or isolated networks block device-to-device connections.</p></details>
+        <details><summary>Does everyone need to buy Party Lord?</summary><p>No. Only the DJ/host needs Party Lord (£2.99). Friends use Party Speaker free on Android or the browser option when the host enables Web Guests.</p></details>
+        <details><summary>Can I use Spotify or other subscription music apps?</summary><p>Party Lord currently plays music files you select from your device or supported file providers such as Google Drive. It does not import playback directly from Spotify, Apple Music or other streaming subscriptions.</p></details>
+        <details><summary>Does it work on iPhones?</summary><p>The DJ and native Speaker apps are Android products. The browser guest can be opened on other devices, including compatible mobile browsers. iOS and some other browsers may interrupt audio when the screen locks or the app is backgrounded.</p></details>
+        <details><summary>Do I need an internet connection?</summary><p>The synchronized party uses local Wi-Fi. Downloading music from Google Drive, installing the apps and other external services require internet access, but local file playback does not require a developer-hosted music streaming service.</p></details>
+        <details><summary>Is Party Lord available on Google Play yet?</summary><p>Not yet. Party Lord is being prepared for Google Play at £2.99, and the free Party Speaker companion is planned alongside it. Store links will be added when the apps are published.</p></details>
+      </div>
+    </div>
+  </section>
+  <section class="wrap">
+    <div class="cta"><div class="kicker">The party starts here</div><h2>Bring the music.<br><span class="gradient">We'll bring the connection.</span></h2><p>Party Lord and Party Speaker are being prepared for Google Play. For questions, feedback or support, get in touch.</p><a class="btn btn-primary" href="mailto:gurprit.sahota@gmail.com?subject=Party%20Lord%20support">Contact support <span aria-hidden="true">↗</span></a></div>
+  </section>
+</main>
+<footer><div class="wrap footer"><span>© 2026 Party Lord · Made for music, built for parties.</span><div class="footer-links"><a href="privacy/">Privacy policy</a><a href="mailto:gurprit.sahota@gmail.com?subject=Party%20Lord%20support">Support</a><a href="#how-it-works">How it works</a></div></div></footer>
+</body>
+</html>
